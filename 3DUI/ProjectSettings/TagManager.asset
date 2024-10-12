@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Left Hand
   - Right Hand
+  - Interactable
   layers:
   - Default
   - TransparentFX
