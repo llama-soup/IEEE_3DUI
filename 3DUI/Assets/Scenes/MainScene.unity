@@ -5978,8 +5978,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de8338d0fd2101143a63cb6ba19079b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  head: {fileID: 1376221382}
-  spawnDistance: 2
   menu: {fileID: 261038163}
   showButton:
     m_UseReference: 1
@@ -5995,6 +5993,7 @@ MonoBehaviour:
     m_Reference: {fileID: 3502436373886481595, guid: c348712bda248c246b8c49b3db54643f, type: 3}
   leftHandRay: {fileID: 802205733}
   rightHandRay: {fileID: 1562304657}
+  leftHandController: {fileID: 2145559044}
 --- !u!4 &1976887313
 Transform:
   m_ObjectHideFlags: 0

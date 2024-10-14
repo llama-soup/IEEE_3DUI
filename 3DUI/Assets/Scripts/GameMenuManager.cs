@@ -4,13 +4,15 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 public class GameMenuManager : MonoBehaviour
 {
-    public Transform head;
-    public float spawnDistance = 2;
     public GameObject menu;
     public InputActionProperty showButton;
-    
     public XRRayInteractor leftHandRay;
     public XRRayInteractor rightHandRay;
+    public Transform leftHandController;
+
+    private Vector3 menuPositionOffset = new Vector3(0f, 0.2f, -0.15f);
+    private Vector3 menuRotationOffset = new Vector3(0f, -95f, 0f);
+    private Vector3 menuScale = new Vector3(0.00025f, 0.00025f, 0.00025f);
 
     private bool isMenuActive = false;
 
@@ -18,6 +20,7 @@ public class GameMenuManager : MonoBehaviour
     {
         menu.SetActive(false);
         SetRayInteractorsActive(false);
+        AttachMenuToWrist();
     }
 
     void Update()
@@ -29,41 +32,28 @@ public class GameMenuManager : MonoBehaviour
 
         if (isMenuActive)
         {
-            UpdateMenuPosition();
+            UpdateMenuTransform();
         }
+    }
+
+    private void AttachMenuToWrist()
+    {
+        menu.transform.SetParent(leftHandController, false);
+        UpdateMenuTransform();
+    }
+
+    private void UpdateMenuTransform()
+    {
+        menu.transform.localPosition = menuPositionOffset;
+        menu.transform.localRotation = Quaternion.Euler(menuRotationOffset);
+        menu.transform.localScale = menuScale;
     }
 
     private void ToggleMenu()
     {
         isMenuActive = !isMenuActive;
         menu.SetActive(isMenuActive);
-
-        if (isMenuActive)
-        {
-            // Use the actual forward direction of the head
-            Vector3 headForward = head.forward;
-            
-            // Calculate the spawn position
-            Vector3 spawnPosition = head.position + headForward * spawnDistance;
-            
-            // Ensure the menu is at eye level
-            spawnPosition.y = head.position.y + 0.5f;
-            
-            // Set the menu position
-            menu.transform.position = spawnPosition;
-            
-            // Make the menu face the user
-            menu.transform.LookAt(head);
-            menu.transform.forward *= -1;
-        }
-
         SetRayInteractorsActive(isMenuActive);
-    }
-
-    private void UpdateMenuPosition()
-    {
-        menu.transform.LookAt(new Vector3(head.position.x, menu.transform.position.y, head.position.z));
-        menu.transform.forward *= -1;
     }
 
     private void SetRayInteractorsActive(bool active)
