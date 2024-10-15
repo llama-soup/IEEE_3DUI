@@ -898,7 +898,6 @@ GameObject:
   - component: {fileID: 261038165}
   - component: {fileID: 261038168}
   - component: {fileID: 261038169}
-  - component: {fileID: 261038170}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -1007,23 +1006,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   snapTurn: {fileID: 1376221387}
   continuousTurn: {fileID: 1376221388}
---- !u!114 &261038170
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 261038163}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 40be9bd62af1c224895391b5a358998e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  joinCodeText: {fileID: 0}
-  joinCodeInputField: {fileID: 1862131102}
-  hostButton: {fileID: 0}
-  joinButton: {fileID: 1526472093}
-  lobbyManager: {fileID: 181892666}
 --- !u!1 &345974591
 GameObject:
   m_ObjectHideFlags: 0
