@@ -27,6 +27,7 @@ public class LobbyUI : MonoBehaviour
     private void OnHostButtonClicked()
     {
         lobbyManager.HostGame();
+        hostButton.interactable = false;
     }
 
     private void OnJoinButtonClicked()

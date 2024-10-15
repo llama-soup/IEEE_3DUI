@@ -15,6 +15,8 @@ public class LobbyManager : MonoBehaviour
     private const int maxPlayers = 2;
     private const int maxRetries = 3;
     private string joinCode;
+    private bool hasTransitioned = false;
+    private bool isHosting = false;
 
     private async void Start()
     {
@@ -42,6 +44,14 @@ public class LobbyManager : MonoBehaviour
 
     public async void HostGame()
     {
+        if (isHosting || NetworkManager.Singleton.IsHost)
+        {
+            Debug.Log("Host game already in progress or started.");
+            return;
+        }
+
+        isHosting = true;
+
         try
         {
             Allocation allocation = await RelayService.Instance.CreateAllocationAsync(maxPlayers);
@@ -55,15 +65,26 @@ public class LobbyManager : MonoBehaviour
                 allocation.ConnectionData
             );
 
-            NetworkManager.Singleton.StartHost();
-            Debug.Log($"Host started. Join code: {joinCode}");
-
-            // Trigger the event with the join code
-            OnJoinCodeGenerated?.Invoke(joinCode);
+            if (NetworkManager.Singleton.StartHost())
+            {
+                Debug.Log($"Host started. Join code: {joinCode}");
+                OnJoinCodeGenerated?.Invoke(joinCode);
+            }
+            else
+            {
+                Debug.LogError("Failed to start host.");
+                isHosting = false;
+            }
         }
         catch (RelayServiceException ex)
         {
             Debug.LogError($"Relay service error: {ex.Message}");
+            isHosting = false;
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError($"Unexpected error while hosting: {ex.Message}");
+            isHosting = false;
         }
     }
 
@@ -100,9 +121,10 @@ public class LobbyManager : MonoBehaviour
 
     private void Update()
     {
-        if (NetworkManager.Singleton.IsServer && NetworkManager.Singleton.ConnectedClients.Count >= maxPlayers)
+        if (!hasTransitioned && NetworkManager.Singleton.IsServer && NetworkManager.Singleton.ConnectedClients.Count >= maxPlayers)
         {
             TransitionToGame();
+            hasTransitioned = true;
         }
     }
 
