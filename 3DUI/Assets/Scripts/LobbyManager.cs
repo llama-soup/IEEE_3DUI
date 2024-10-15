@@ -7,6 +7,7 @@ using Unity.Services.Relay.Models;
 using Unity.Netcode.Transports.UTP;
 using UnityEngine.SceneManagement;
 using System.Threading.Tasks;
+using System;
 
 public class LobbyManager : MonoBehaviour
 {
@@ -68,9 +69,11 @@ public class LobbyManager : MonoBehaviour
 
     public async void JoinGame(string providedJoinCode)
     {
+        Debug.Log($"Attempting to join game with code: {providedJoinCode}");
         try
         {
             JoinAllocation joinAllocation = await RelayService.Instance.JoinAllocationAsync(providedJoinCode);
+            Debug.Log("Join allocation successful");
 
             NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(
                 joinAllocation.RelayServer.IpV4,
@@ -80,13 +83,18 @@ public class LobbyManager : MonoBehaviour
                 joinAllocation.ConnectionData,
                 joinAllocation.HostConnectionData
             );
+            Debug.Log("Relay server data set");
 
             NetworkManager.Singleton.StartClient();
             Debug.Log("Client started");
         }
         catch (RelayServiceException ex)
         {
-            Debug.LogError($"Relay service error: {ex.Message}");
+            Debug.LogError($"Relay service error: {ex.Message}.\nProvided Join Code: {providedJoinCode}");
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError($"Unexpected error: {ex.Message}.\nProvided Join Code: {providedJoinCode}");
         }
     }
 
