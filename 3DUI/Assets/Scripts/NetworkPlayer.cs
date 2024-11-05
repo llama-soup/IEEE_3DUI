@@ -1,8 +1,12 @@
 using UnityEngine;
 using Unity.Netcode;
+using UnityEngine.Experimental.Rendering.RenderGraphModule;
 
 public class NetworkPlayer : NetworkBehaviour
 {
+    public Material presentSkybox;
+    private Color presentFogColor = Color.blue;
+    const  float presentFogDensity = 0.02f;
     public Transform head;
     public Transform leftHand;
     public Transform rightHand;
@@ -28,6 +32,18 @@ public class NetworkPlayer : NetworkBehaviour
                 if (item != null) item.enabled = false;
             }
         }
+        if (IsClient){
+            UpdateClientEnvironment();
+        }
+
+    }
+
+    void UpdateClientEnvironment(){
+        // Set HDR to not cloudy day if we are the client (aka not the server, player 1)(aka player 2)
+        RenderSettings.fogColor = presentFogColor;
+        RenderSettings.fogDensity = presentFogDensity;
+        RenderSettings.skybox = presentSkybox;
+        DynamicGI.UpdateEnvironment();
     }
 
     void Update()
