@@ -4,31 +4,36 @@ using UnityEngine;
 
 public class RiftCamera : MonoBehaviour
 {
-    public Camera riftCamera;
-    public Transform rift1;
-    public Transform rift2;
-    public Camera playerCamera;
+    public Camera thisRiftCamera;        // The camera attached to this rift
+    public Camera otherRiftCamera;
+    public Transform thisRift;       // The rift this camera is attached to
+    public Transform otherRift;      // The rift the player looks through
+    public Camera playerCamera;      // The main player camera
     
     private RenderTexture renderTexture;
     
     void Start()
     {
-        // Create render texture for the rift
         renderTexture = new RenderTexture(Screen.width, Screen.height, 24);
-        riftCamera.targetTexture = renderTexture;
+        thisRiftCamera.targetTexture = renderTexture;
+        thisRift.GetComponent<MeshRenderer>().material.mainTexture = renderTexture;
         
-        // Assign render texture to rift1's material
-        rift1.GetComponent<MeshRenderer>().material.mainTexture = renderTexture;
+        // Fix camera position to this rift
+        otherRiftCamera.transform.position = thisRift.position;
     }
 
     void LateUpdate()
     {
-        // Calculate camera position relative to rift2
-        Vector3 playerFromRift1 = playerCamera.transform.position - rift1.position;
-        riftCamera.transform.position = rift2.position + playerFromRift1;
+        // Get the relative position of the player to the other rift
+        Vector3 relativePos = otherRift.InverseTransformPoint(playerCamera.transform.position);
         
-        // Match rotation
-        Quaternion rotationDiff = Quaternion.Inverse(rift1.rotation) * playerCamera.transform.rotation;
-        riftCamera.transform.rotation = rift2.rotation * rotationDiff;
+        // Convert to angles
+        float verticalAngle = Mathf.Atan2(relativePos.y, relativePos.z) * Mathf.Rad2Deg;
+        float horizontalAngle = Mathf.Atan2(relativePos.x, relativePos.z) * Mathf.Rad2Deg;
+        
+        // Apply the angles to this rift's camera, with additional 180 rotation around X axis to fix upside down view
+        thisRiftCamera.transform.rotation = thisRift.rotation 
+            * Quaternion.Euler(-verticalAngle, -horizontalAngle, 0) 
+            * Quaternion.Euler(180, 90, 0);
     }
 }
