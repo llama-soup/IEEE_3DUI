@@ -2,6 +2,7 @@ using UnityEngine;
 using Unity.Netcode;
 using UnityEngine.Experimental.Rendering.RenderGraphModule;
 using System;
+using TMPro;
 
 public class NetworkPlayer : NetworkBehaviour
 {
@@ -14,6 +15,8 @@ public class NetworkPlayer : NetworkBehaviour
 
     public Renderer[] meshToDisable;
 
+    [SerializeField] private TMP_Dropdown languageSetting;
+    [SerializeField] private TMP_Dropdown microphones;
     public String language;
     public String microphone;
 
@@ -40,6 +43,16 @@ public class NetworkPlayer : NetworkBehaviour
             UpdateClientEnvironment();
         }
 
+    }
+
+    void UpdateLanguage(){
+        int pickedIndex = languageSetting.value;
+        language = languageSetting.options[pickedIndex].text;
+    }
+
+    void UpdateMicrophone(){
+        int pickedIndex = microphones.value;
+        microphone= microphones.options[pickedIndex].text;
     }
 
     void UpdateClientEnvironment(){

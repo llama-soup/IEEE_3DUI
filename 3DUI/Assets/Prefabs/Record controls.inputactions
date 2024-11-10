@@ -19,7 +19,7 @@
                 {
                     "name": "",
                     "id": "2d5ce4cd-be09-4758-ad2c-5daf1f5670b8",
-                    "path": "<XRController>{LeftHand}/{Back}",
+                    "path": "<XRController>{RightHand}/{SecondaryButton}",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
