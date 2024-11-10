@@ -1,6 +1,7 @@
 using UnityEngine;
 using Unity.Netcode;
 using UnityEngine.Experimental.Rendering.RenderGraphModule;
+using System;
 
 public class NetworkPlayer : NetworkBehaviour
 {
@@ -12,6 +13,9 @@ public class NetworkPlayer : NetworkBehaviour
     public Transform rightHand;
 
     public Renderer[] meshToDisable;
+
+    public String language;
+    public String microphone;
 
     private NetworkVariable<Vector3> netRootPosition = new NetworkVariable<Vector3>();
     private NetworkVariable<Quaternion> netRootRotation = new NetworkVariable<Quaternion>();
