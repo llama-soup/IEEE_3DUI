@@ -7,6 +7,7 @@ TagManager:
   - Left Hand
   - Right Hand
   - Interactable
+  - Keycard
   layers:
   - Default
   - TransparentFX
