@@ -1,13 +1,24 @@
 using UnityEngine;
 using Unity.Netcode;
+using UnityEngine.Experimental.Rendering.RenderGraphModule;
+using System;
+using TMPro;
 
 public class NetworkPlayer : NetworkBehaviour
 {
+    public Material presentSkybox;
+    private Color presentFogColor = Color.blue;
+    const  float presentFogDensity = 0.02f;
     public Transform head;
     public Transform leftHand;
     public Transform rightHand;
 
     public Renderer[] meshToDisable;
+
+    [SerializeField] private TMP_Dropdown languageSetting;
+    [SerializeField] private TMP_Dropdown microphones;
+    public String language;
+    public String microphone;
 
     private NetworkVariable<Vector3> netRootPosition = new NetworkVariable<Vector3>();
     private NetworkVariable<Quaternion> netRootRotation = new NetworkVariable<Quaternion>();
@@ -28,6 +39,28 @@ public class NetworkPlayer : NetworkBehaviour
                 if (item != null) item.enabled = false;
             }
         }
+        if (IsClient){
+            UpdateClientEnvironment();
+        }
+
+    }
+
+    void UpdateLanguage(){
+        int pickedIndex = languageSetting.value;
+        language = languageSetting.options[pickedIndex].text;
+    }
+
+    void UpdateMicrophone(){
+        int pickedIndex = microphones.value;
+        microphone= microphones.options[pickedIndex].text;
+    }
+
+    void UpdateClientEnvironment(){
+        // Set HDR to not cloudy day if we are the client (aka not the server, player 1)(aka player 2)
+        RenderSettings.fogColor = presentFogColor;
+        RenderSettings.fogDensity = presentFogDensity;
+        RenderSettings.skybox = presentSkybox;
+        DynamicGI.UpdateEnvironment();
     }
 
     void Update()

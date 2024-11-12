@@ -4,68 +4,87 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 public class GameMenuManager : MonoBehaviour
 {
-    public GameObject menu;
+    [Header("Menu Prefab")]
+    [SerializeField] private GameObject menuPrefab;
+    private GameObject menuInstance;
+
+    [Header("XR Components")]
     public InputActionProperty showButton;
     public XRRayInteractor leftHandRay;
     public XRRayInteractor rightHandRay;
     public Transform leftHandController;
 
-    private Vector3 menuPositionOffset = new Vector3(0f, 0.2f, -0.15f);
+    [Header("Menu Transform Settings")]
+    private Vector3 menuPositionOffset = new Vector3(-0.95f, -0.65f, 0f);
     private Vector3 menuRotationOffset = new Vector3(0f, -95f, 0f);
-    private Vector3 menuScale = new Vector3(0.00025f, 0.00025f, 0.00025f);
+    private Vector3 menuScale = new Vector3(0.3f, 0.3f, 0.05f);
 
     private bool isMenuActive = false;
+    private MenuNavigator menuNavigator;
 
     void Start()
     {
-        menu.SetActive(false);
+        InstantiateMenu();
         SetRayInteractorsActive(false);
-        AttachMenuToWrist();
+    }
+
+    private void InstantiateMenu()
+    {
+        if (menuPrefab == null || leftHandController == null)
+        {
+            Debug.LogError("Menu prefab or left hand controller not assigned!");
+            return;
+        }
+
+        menuInstance = Instantiate(menuPrefab, leftHandController);
+        menuInstance.SetActive(false);
+        UpdateMenuTransform();
+
+        // Get reference to the MenuNavigator component
+        menuNavigator = menuInstance.GetComponentInChildren<MenuNavigator>();
+        if (menuNavigator == null)
+        {
+            Debug.LogError("MenuNavigator component not found in prefab!");
+        }
     }
 
     void Update()
     {
+        UpdateMenuTransform();
         if (showButton.action.WasPressedThisFrame())
         {
             ToggleMenu();
         }
-
-        if (isMenuActive)
-        {
-            UpdateMenuTransform();
-        }
-    }
-
-    private void AttachMenuToWrist()
-    {
-        menu.transform.SetParent(leftHandController, false);
-        UpdateMenuTransform();
     }
 
     private void UpdateMenuTransform()
     {
-        menu.transform.localPosition = menuPositionOffset;
-        menu.transform.localRotation = Quaternion.Euler(menuRotationOffset);
-        menu.transform.localScale = menuScale;
+        if (menuInstance != null)
+        {
+            menuInstance.transform.localPosition = menuPositionOffset;
+            menuInstance.transform.localRotation = Quaternion.Euler(menuRotationOffset);
+            menuInstance.transform.localScale = menuScale;
+        }
     }
 
     private void ToggleMenu()
     {
+        if (menuInstance == null || menuNavigator == null) return;
+
         isMenuActive = !isMenuActive;
-        menu.SetActive(isMenuActive);
+        menuInstance.SetActive(isMenuActive);
+        
+        if (isMenuActive)
+        {
+            menuNavigator.NavigateToGameMenu();
+        }
+        
         SetRayInteractorsActive(isMenuActive);
     }
 
     private void SetRayInteractorsActive(bool active)
     {
-        if (leftHandRay != null)
-        {
-            leftHandRay.gameObject.SetActive(active);
-        }
-        
-        if (rightHandRay != null)
-        {
-            rightHandRay.gameObject.SetActive(active);
-        }
+        if (leftHandRay != null) leftHandRay.gameObject.SetActive(active);
+        if (rightHandRay != null) rightHandRay.gameObject.SetActive(active);
     }
 }

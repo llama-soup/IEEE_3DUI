@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: -7359535170617230091}
   - component: {fileID: 9171828121518899046}
   - component: {fileID: 7825916495287122496}
+  - component: {fileID: -114576288727526058}
   m_Layer: 0
   m_Name: Network Player
   m_TagString: Untagged
@@ -49,7 +50,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 2536501981
+  GlobalObjectIdHash: 2885760164
   InScenePlacedSourceGlobalObjectIdHash: 0
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
@@ -70,6 +71,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e28386af5eb763343ba5f6d44525946d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  presentSkybox: {fileID: 2100000, guid: d9dca9ae1786c394f9e79c637aa9a7bf, type: 2}
   head: {fileID: 8762039366545030523}
   leftHand: {fileID: 314903775056503793}
   rightHand: {fileID: 8543630430494406303}
@@ -108,6 +110,40 @@ MonoBehaviour:
   InLocalSpace: 0
   Interpolate: 1
   SlerpPosition: 0
+--- !u!114 &-114576288727526058
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3730834483268116179}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: 00331cff870050b40bfb60a965e48bdd, type: 3}
+  m_NotificationBehavior: 2
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents:
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: b89667ab-0b46-407d-aca1-502030cf9858
+    m_ActionName: Translate/Message
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: Translate
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
 --- !u!1 &4680972654243882896
 GameObject:
   m_ObjectHideFlags: 0
@@ -252,7 +288,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &8762039366545030523
 Transform:
   m_ObjectHideFlags: 0
@@ -311,7 +347,6 @@ GameObject:
   - component: {fileID: 2677629152155640893}
   - component: {fileID: 3604732577593773716}
   - component: {fileID: 6829220942021608938}
-  - component: {fileID: 1437243778958115998}
   m_Layer: 0
   m_Name: Head Model
   m_TagString: Untagged
@@ -384,27 +419,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &1437243778958115998
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6711246110299749759}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &3253419891945296575
 PrefabInstance:
   m_ObjectHideFlags: 0
