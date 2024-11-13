@@ -15,8 +15,8 @@ public class NetworkPlayer : NetworkBehaviour
 
     public Renderer[] meshToDisable;
 
-    [SerializeField] private TMP_Dropdown languageSetting;
-    [SerializeField] private TMP_Dropdown microphones;
+    private GameObject languageSetting;
+    private GameObject microphones;
     public String language;
     public String microphone;
 
@@ -46,13 +46,29 @@ public class NetworkPlayer : NetworkBehaviour
     }
 
     void UpdateLanguage(){
-        int pickedIndex = languageSetting.value;
-        language = languageSetting.options[pickedIndex].text;
+        if (languageSetting.TryGetComponent(out TMP_Dropdown component))
+        {
+            int pickedIndex = component.value;
+            language = component.options[pickedIndex].text;
+        }
+        else
+        {
+            // Component was not found
+            Debug.Log("Component not found!");
+        }
     }
 
     void UpdateMicrophone(){
-        int pickedIndex = microphones.value;
-        microphone= microphones.options[pickedIndex].text;
+        if (microphones.TryGetComponent(out TMP_Dropdown component))
+        {
+            int pickedIndex = component.value;
+            microphone = component.options[pickedIndex].text;
+        }
+        else
+        {
+            // Component was not found
+            Debug.Log("Component not found!");
+        }
     }
 
     void UpdateClientEnvironment(){
@@ -73,6 +89,16 @@ public class NetworkPlayer : NetworkBehaviour
         else
         {
             UpdateNetworkTransforms();
+        }
+        if (GameObject.FindWithTag("Language Options") != null)
+        {
+            languageSetting = GameObject.FindWithTag("Language Options");
+            UpdateLanguage();
+        }
+        if (GameObject.FindWithTag("Microphones") != null)
+        {
+            microphones = GameObject.FindWithTag("Language Options");
+            UpdateMicrophone();
         }
     }
 
