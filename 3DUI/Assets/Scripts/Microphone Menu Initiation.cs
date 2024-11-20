@@ -6,7 +6,7 @@ using UnityEngine.UI;
 using TMPro;
 
 
-public class MicrophoneMenyInitiation : MonoBehaviour
+public class MicrophoneMenuInitiation : MonoBehaviour
 {
     [SerializeField] private TMP_Dropdown dropdown;
     // Start is called before the first frame update

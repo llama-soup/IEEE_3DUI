@@ -3,6 +3,7 @@ using Unity.Netcode;
 using UnityEngine.Experimental.Rendering.RenderGraphModule;
 using System;
 using TMPro;
+using UnityEngine.UI;
 
 public class NetworkPlayer : NetworkBehaviour
 {
@@ -19,6 +20,8 @@ public class NetworkPlayer : NetworkBehaviour
     private GameObject microphones;
     public String language;
     public String microphone;
+    public int player_ID;
+    public TextMeshProUGUI messageDisplay;
 
     private NetworkVariable<Vector3> netRootPosition = new NetworkVariable<Vector3>();
     private NetworkVariable<Quaternion> netRootRotation = new NetworkVariable<Quaternion>();
@@ -41,8 +44,44 @@ public class NetworkPlayer : NetworkBehaviour
         }
         if (IsClient){
             UpdateClientEnvironment();
+            player_ID = NetworkManager.Singleton.ConnectedClients.Count;
+            CreateMessageBox();
         }
 
+    }
+
+    void CreateMessageBox(){
+        // Create a new GameObject for the text
+        GameObject textObject = new GameObject("Translation Text");
+
+        // Attach the TextMeshPro component
+        TextMeshProUGUI messageDisplay = textObject.AddComponent<TextMeshProUGUI>();
+
+        // Set the text properties
+        messageDisplay.text = "";
+        messageDisplay.fontSize = 36;
+        messageDisplay.alignment = TextAlignmentOptions.Center;
+
+        // Get or create a Canvas in the scene
+        Canvas canvas = FindObjectOfType<Canvas>();
+        if (canvas == null)
+        {
+            GameObject canvasObject = new GameObject("Canvas");
+            canvas = canvasObject.AddComponent<Canvas>();
+            canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+            canvasObject.AddComponent<CanvasScaler>();
+            canvasObject.AddComponent<GraphicRaycaster>();
+        }
+
+        // Set the text object's parent to the canvas
+        textObject.transform.SetParent(canvas.transform, false);
+
+        // Position the text at the bottom middle of the screen
+        RectTransform rectTransform = textObject.GetComponent<RectTransform>();
+        rectTransform.anchorMin = new Vector2(0.5f, 0);
+        rectTransform.anchorMax = new Vector2(0.5f, 0);
+        rectTransform.pivot = new Vector2(0.5f, 0);
+        rectTransform.anchoredPosition = new Vector2(0, 50); // Adjust the Y value for padding
     }
 
     void UpdateLanguage(){
