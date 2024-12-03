@@ -1,12 +1,12 @@
 {
-    "name": "New Controls",
+    "name": "Record controls",
     "maps": [
         {
             "name": "Translate",
             "id": "8a75d901-ac48-4cf1-a825-facd8c5f34d9",
             "actions": [
                 {
-                    "name": "Message",
+                    "name": "Translate",
                     "type": "Button",
                     "id": "b89667ab-0b46-407d-aca1-502030cf9858",
                     "expectedControlType": "Button",
@@ -23,7 +23,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Message",
+                    "action": "Translate",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

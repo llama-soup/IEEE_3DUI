@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: -7359535170617230091}
   - component: {fileID: 9171828121518899046}
   - component: {fileID: 7825916495287122496}
-  - component: {fileID: -114576288727526058}
+  - component: {fileID: -6206298534424060486}
+  - component: {fileID: 4073195454512857822}
   m_Layer: 0
   m_Name: Network Player
   m_TagString: Untagged
@@ -51,7 +52,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 2536501981
+  GlobalObjectIdHash: 2885760164
   InScenePlacedSourceGlobalObjectIdHash: 0
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
@@ -82,6 +83,8 @@ MonoBehaviour:
   - {fileID: 6829220942021608938}
   language: 
   microphone: 
+  player_ID: 0
+  messageDisplay: {fileID: 0}
 --- !u!114 &7825916495287122496
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -113,7 +116,19 @@ MonoBehaviour:
   InLocalSpace: 0
   Interpolate: 1
   SlerpPosition: 0
---- !u!114 &-114576288727526058
+--- !u!114 &-6206298534424060486
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3730834483268116179}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afcf83b9b58fece479599dce97d2b25a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &4073195454512857822
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -139,9 +154,21 @@ MonoBehaviour:
       m_Calls: []
   m_ActionEvents:
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: -6206298534424060486}
+        m_TargetAssemblyTypeName: Translation, Assembly-CSharp
+        m_MethodName: Translate
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: b89667ab-0b46-407d-aca1-502030cf9858
-    m_ActionName: Translate/Message
+    m_ActionName: Translate/Translate
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Translate

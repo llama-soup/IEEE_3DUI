@@ -4,6 +4,10 @@ using UnityEngine.Experimental.Rendering.RenderGraphModule;
 using System;
 using TMPro;
 using UnityEngine.UI;
+using OpenAI;
+using UnityEngine.InputSystem;
+using System.Collections.Generic;
+using Samples.Whisper;
 
 public class NetworkPlayer : NetworkBehaviour
 {
@@ -15,14 +19,25 @@ public class NetworkPlayer : NetworkBehaviour
     public Transform rightHand;
 
     public Renderer[] meshToDisable;
-
+    //Traslate variables
     private GameObject languageSetting;
     private GameObject microphones;
     public String language;
     public String microphone;
     public int player_ID;
     public TextMeshProUGUI messageDisplay;
-
+    private List<ChatMessage> messages = new List<ChatMessage>();
+    private string prompt = "Act as a translator for the user. Your response should only include the translation requested. Don't break character. Don't ever mention that you are an AI model.";
+    
+    private readonly string fileName = "output.wav";
+    private readonly int duration = 10;
+    
+    private AudioClip clip;
+    private bool isRecording;
+    private bool stop;
+    private float time;
+    private OpenAIApi openai = new OpenAIApi();
+    //end of translate variables
     private NetworkVariable<Vector3> netRootPosition = new NetworkVariable<Vector3>();
     private NetworkVariable<Quaternion> netRootRotation = new NetworkVariable<Quaternion>();
     private NetworkVariable<Vector3> netHeadLocalPosition = new NetworkVariable<Vector3>();
@@ -47,6 +62,7 @@ public class NetworkPlayer : NetworkBehaviour
             player_ID = NetworkManager.Singleton.ConnectedClients.Count;
             CreateMessageBox();
         }
+        stop = false;
 
     }
 
@@ -110,6 +126,91 @@ public class NetworkPlayer : NetworkBehaviour
         }
     }
 
+    public void SpaceRecord()
+    {
+        if(IsOwner)
+        {
+            isRecording = true;
+            #if !UNITY_WEBGL
+            clip = Microphone.Start(microphone, false, duration, 44100);
+            SendReply();
+            #endif
+        }
+    }
+
+    public void EndRecord()
+    {
+        if(IsOwner)
+        {
+            stop = true;
+        }
+    }
+
+    private async void SendReply()
+    {
+        var newMessage = new ChatMessage()
+        {
+            Role = "user",
+            Content = messageDisplay.text
+        };
+
+        if (messages.Count == 0) 
+        {
+            if(language == "Select a Language"){
+                language = "English";
+            }
+            newMessage.Content = prompt + " Translate the message from English to " + language + ".\n" + messageDisplay.text;
+            //Debug.Log(newMessage.Content);
+        }
+        
+        messages.Add(newMessage);
+        
+        messageDisplay.text = "";
+        
+        var completionResponse = await openai.CreateChatCompletion(new CreateChatCompletionRequest()
+        {
+            Model = "gpt-4o-mini",
+            Messages = messages
+        });
+
+        if (completionResponse.Choices != null && completionResponse.Choices.Count > 0)
+        {
+            var message = completionResponse.Choices[0].Message;
+            message.Content = message.Content.Trim();
+            
+            messageDisplay.text = message.Content;
+            messages.Clear();
+        }
+        else
+        {
+            Debug.LogWarning("No text was generated from this prompt.");
+        }
+    }
+
+    private async void EndRecording()
+    {
+        messageDisplay.text = "Transcripting...";
+        
+        #if !UNITY_WEBGL
+        Microphone.End(null);
+        #endif
+        
+        byte[] data = SaveWav.Save(fileName, clip);
+        
+        var req = new CreateAudioTranslationRequest
+        {
+            FileData = new FileData() {Data = data, Name = "audio.wav"},
+            // File = Application.persistentDataPath + "/" + fileName,
+            Model = "whisper-1",
+        };
+        var res = await openai.CreateAudioTranslation(req);
+
+        messageDisplay.gameObject.SetActive(false);
+        messageDisplay.text = res.Text;
+        SendReply();
+        messageDisplay.gameObject.SetActive(true);
+    }
+
     void UpdateClientEnvironment(){
         // Set HDR to not cloudy day if we are the client (aka not the server, player 1)(aka player 2)
         RenderSettings.fogColor = presentFogColor;
@@ -134,10 +235,22 @@ public class NetworkPlayer : NetworkBehaviour
             languageSetting = GameObject.FindWithTag("Language Options");
             UpdateLanguage();
         }
-        if (GameObject.FindWithTag("Microphones") != null)
+        if (GameObject.FindWithTag("Microphone Dropdown") != null)
         {
-            microphones = GameObject.FindWithTag("Language Options");
+            microphones = GameObject.FindWithTag("Microphone Dropdown");
             UpdateMicrophone();
+        }
+        if (isRecording)
+        {
+            time += Time.deltaTime;
+            
+            if (time >= duration || stop)
+            {
+                time = 0;
+                isRecording = false;
+                stop = false;
+                EndRecording();
+            }
         }
     }
 
