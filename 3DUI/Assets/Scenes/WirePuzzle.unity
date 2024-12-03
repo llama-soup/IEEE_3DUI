@@ -212,7 +212,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6803edce0201f574f923fd9d10e5b30a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-<<<<<<< Updated upstream
   visualTarget: {fileID: 392813376}
 --- !u!114 &392813378
 MonoBehaviour:
@@ -941,8 +940,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   visualTarget: {fileID: 691193110}
-=======
->>>>>>> Stashed changes
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
