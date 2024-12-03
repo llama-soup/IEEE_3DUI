@@ -12,8 +12,11 @@ using Samples.Whisper;
 public class NetworkPlayer : NetworkBehaviour
 {
     public Material presentSkybox;
+    public Material futureSkybox;
     private Color presentFogColor = Color.blue;
+    private Color futureFogcolor = Color.gray;
     const  float presentFogDensity = 0.02f;
+    const float futureFogDensity = 0.04f;
     public Transform head;
     public Transform leftHand;
     public Transform rightHand;
@@ -213,9 +216,9 @@ public class NetworkPlayer : NetworkBehaviour
 
     void UpdateClientEnvironment(){
         // Set HDR to not cloudy day if we are the client (aka not the server, player 1)(aka player 2)
-        RenderSettings.fogColor = presentFogColor;
-        RenderSettings.fogDensity = presentFogDensity;
-        RenderSettings.skybox = presentSkybox;
+        RenderSettings.fogColor = futureFogcolor;
+        RenderSettings.fogDensity = futureFogDensity;
+        RenderSettings.skybox = futureSkybox;
         DynamicGI.UpdateEnvironment();
     }
 
