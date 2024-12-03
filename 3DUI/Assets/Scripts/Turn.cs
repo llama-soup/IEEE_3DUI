@@ -4,16 +4,17 @@ using UnityEngine;
 
 public class Turn : MonoBehaviour
 {
-    private Renderer _renderer;
+    private Transform localTransform;
+    public float xYRot = 0.0f;
 
     // Start is called before the first frame update
     void Start()
     {
-        _renderer = GetComponent<Renderer>();
+        localTransform = GetComponent<Transform>();
     }
 
     private void OnMouseDown()
     {
-        _renderer.transform.Rotate(0.0f, 0.0f, -90.0f);
+        // _renderer.transform.Rotate(0.0f, 0.0f, -90.0f);
     }
 }

@@ -13,12 +13,15 @@ public class RotateWire : MonoBehaviour
     void Start()
     {
         interactable = GetComponent<XRBaseInteractable>();
-        interactable.selectEntered.AddListener(Rotate);
+        interactable.hoverEntered.AddListener(Rotate);
+        // interactable.selectEntered.AddListener(Rotate);
     }
-
-    public void Rotate(BaseInteractionEventArgs select)
+    // BaseInteractionEventArgs select
+    public void Rotate(BaseInteractionEventArgs hover)
     {
-        rotating = true;
+        if(hover.interactorObject is XRPokeInteractor){
+            rotating = true;
+        }
     }
 
     // Update is called once per frame

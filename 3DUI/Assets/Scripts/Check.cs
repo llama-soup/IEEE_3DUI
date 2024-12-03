@@ -17,8 +17,10 @@ public class Check : MonoBehaviour
     GameObject squareTen;
     GameObject squareEleven;
     GameObject squareTwelve;
-    // GameObject instructions;
-    // GameObject congratulations;
+    GameObject instructions;
+    GameObject complete;
+    bool change = true;
+    // int index = 0;
     
     // Start is called before the first frame update
     void Start()
@@ -36,8 +38,8 @@ public class Check : MonoBehaviour
         squareTen = GameObject.Find("Cube (10)");
         squareEleven = GameObject.Find("Cube (11)");
         squareTwelve = GameObject.Find("Cube (12)");
-        // instructions = GameObject.Find("Instructions");
-        // congratulations = GameObject.Find("Congratulations");
+        instructions = GameObject.Find("Instructions");
+        complete = GameObject.Find("Complete");
     }
 
     // Update is called once per frame
@@ -57,13 +59,60 @@ public class Check : MonoBehaviour
         float rEleven = squareEleven.transform.eulerAngles.z;
         float rTwelve = squareTwelve.transform.eulerAngles.z;
 
-        if(rZero == 270 && rOne == 180 && rTwo == 90 && rThree == 180 && (rFour == 0 || rFour == 180) && rFive == 270 && rSix == 0 && rSeven == 90 && rEight == 90)
+        // if(index % 2400 == 0)
+        // {
+        //     Debug.Log(rZero+","+rOne+","+rTwo+","+rThree+","+rFour+","+rFive+","+rSix+","+rSeven+","+rEight+","+rNine+","+rTen+","+rEleven+","+rTwelve);
+        // }
+
+        if(is270(rZero) && is180(rOne) && is90(rTwo) && is180(rThree) && (is270(rFour) || is90(rFour))
+            && is0(rFive) && is270(rSix) && (is0(rSeven) || is180(rSeven)) && is270(rEight)
+            && is0(rNine) && is90(rTen) && is90(rEleven) && is90(rTwelve) && change)
         {
-            // while(congratulations.transform.position.x <= 1000)
-            // {
-            //     instructions.transform.Translate(Vector3.right*Time.deltaTime*5000);
-            //     congratulations.transform.Translate(Vector3.right*Time.deltaTime*5000);
-            // }
+            instructions.transform.Translate(0,0,0.1499986f * 0.05f);
+            complete.transform.Translate(0,0,-0.1499986f * 0.05f);
+            change = false; 
+            // Debug.Log("Hello");
+            // yield return new WaitForSeconds(5.0f);
+            // Debug.Log("World");
         }
+
+        // index++;
     }
+
+    bool is270(float angle)
+    {
+        if ((angle - 270) % 360 == 0)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    bool is0(float angle)
+    {
+        if ((angle > 0 && angle < 0.01) || (angle % 360 == 0))
+        {
+            return true;
+        }
+        return false;
+    }
+
+    bool is180(float angle)
+    {
+        if ((angle - 180) % 360 == 0)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    bool is90(float angle)
+    {
+        if ((angle - 90) % 360 == 0)
+        {
+            return true;
+        }
+        return false;
+    }
+
 }
