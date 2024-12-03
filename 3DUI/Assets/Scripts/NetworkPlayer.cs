@@ -5,7 +5,6 @@ using System;
 using TMPro;
 using UnityEngine.UI;
 using OpenAI;
-using UnityEngine.InputSystem;
 using System.Collections.Generic;
 using Samples.Whisper;
 
@@ -65,10 +64,11 @@ public class NetworkPlayer : NetworkBehaviour
             player_ID = NetworkManager.Singleton.ConnectedClients.Count;
             CreateMessageBox();
         }
+        //Boolean that stops the audio recording.
         stop = false;
 
     }
-
+    //Creates the message dissplay for the player
     void CreateMessageBox(){
         // Create a new GameObject for the text
         GameObject textObject = new GameObject("Translation Text");
@@ -102,7 +102,7 @@ public class NetworkPlayer : NetworkBehaviour
         rectTransform.pivot = new Vector2(0.5f, 0);
         rectTransform.anchoredPosition = new Vector2(0, 50); // Adjust the Y value for padding
     }
-
+    //Updates the language to what the player selects in the menu
     void UpdateLanguage(){
         if (languageSetting.TryGetComponent(out TMP_Dropdown component))
         {
@@ -115,7 +115,7 @@ public class NetworkPlayer : NetworkBehaviour
             Debug.Log("Component not found!");
         }
     }
-
+    //Updates the microphone to the one selected in the menu
     void UpdateMicrophone(){
         if (microphones.TryGetComponent(out TMP_Dropdown component))
         {
@@ -128,7 +128,7 @@ public class NetworkPlayer : NetworkBehaviour
             Debug.Log("Component not found!");
         }
     }
-
+    //Function called by the input manager to start translation
     public void SpaceRecord()
     {
         if(IsOwner)
@@ -140,7 +140,7 @@ public class NetworkPlayer : NetworkBehaviour
             #endif
         }
     }
-
+    //Function called by input manager to end translation.
     public void EndRecord()
     {
         if(IsOwner)
@@ -148,7 +148,7 @@ public class NetworkPlayer : NetworkBehaviour
             stop = true;
         }
     }
-
+    //Translates the message and sends it to the display
     private async void SendReply()
     {
         var newMessage = new ChatMessage()
@@ -157,6 +157,7 @@ public class NetworkPlayer : NetworkBehaviour
             Content = messageDisplay.text
         };
 
+        //Makes the prompt
         if (messages.Count == 0) 
         {
             if(language == "Select a Language"){
@@ -170,12 +171,13 @@ public class NetworkPlayer : NetworkBehaviour
         
         messageDisplay.text = "";
         
+        //translates the message
         var completionResponse = await openai.CreateChatCompletion(new CreateChatCompletionRequest()
         {
             Model = "gpt-4o-mini",
             Messages = messages
         });
-
+        //Moves message to display
         if (completionResponse.Choices != null && completionResponse.Choices.Count > 0)
         {
             var message = completionResponse.Choices[0].Message;
@@ -189,7 +191,7 @@ public class NetworkPlayer : NetworkBehaviour
             Debug.LogWarning("No text was generated from this prompt.");
         }
     }
-
+    //Ends the recording and performs the audio to text transformation
     private async void EndRecording()
     {
         messageDisplay.text = "Transcripting...";
@@ -200,6 +202,7 @@ public class NetworkPlayer : NetworkBehaviour
         
         byte[] data = SaveWav.Save(fileName, clip);
         
+        //Audio to text
         var req = new CreateAudioTranslationRequest
         {
             FileData = new FileData() {Data = data, Name = "audio.wav"},
@@ -233,16 +236,19 @@ public class NetworkPlayer : NetworkBehaviour
         {
             UpdateNetworkTransforms();
         }
+        //Checks if the language menu is open and if so updates the language
         if (GameObject.FindWithTag("Language Options") != null)
         {
             languageSetting = GameObject.FindWithTag("Language Options");
             UpdateLanguage();
         }
+        //Checks if the microphone menu is open and if so updates the microphone
         if (GameObject.FindWithTag("Microphone Dropdown") != null)
         {
             microphones = GameObject.FindWithTag("Microphone Dropdown");
             UpdateMicrophone();
         }
+        //Process for recording the messages
         if (isRecording)
         {
             time += Time.deltaTime;
