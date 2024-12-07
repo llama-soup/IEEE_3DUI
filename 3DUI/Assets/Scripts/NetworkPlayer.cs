@@ -20,6 +20,8 @@ public class NetworkPlayer : NetworkBehaviour
     public Transform leftHand;
     public Transform rightHand;
 
+    public GameObject futurePlayerSpawnPoint;
+
     public Renderer[] meshToDisable;
     //Traslate variables
     private GameObject languageSetting;
@@ -223,6 +225,10 @@ public class NetworkPlayer : NetworkBehaviour
         RenderSettings.fogDensity = futureFogDensity;
         RenderSettings.skybox = futureSkybox;
         DynamicGI.UpdateEnvironment();
+    }
+
+    void SetClientPos(GameObject playerToMove){
+        playerToMove.transform.position = futurePlayerSpawnPoint.transform.position;
     }
 
     void Update()
