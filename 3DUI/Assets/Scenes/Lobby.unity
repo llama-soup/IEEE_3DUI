@@ -1798,9 +1798,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3301312265834449132, guid: 7e6201ce177680149886a4c2450d9613, type: 3}
+      propertyPath: positionAction
+      value: 
+      objectReference: {fileID: -2024308242397127297, guid: c348712bda248c246b8c49b3db54643f, type: 3}
+    - target: {fileID: 3301312265834449132, guid: 7e6201ce177680149886a4c2450d9613, type: 3}
+      propertyPath: rotationAction
+      value: 
+      objectReference: {fileID: 8248158260566104461, guid: c348712bda248c246b8c49b3db54643f, type: 3}
     - target: {fileID: 5544005440223824415, guid: 7e6201ce177680149886a4c2450d9613, type: 3}
       propertyPath: m_Name
       value: XR Origin (VR)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7148021027648350868, guid: 7e6201ce177680149886a4c2450d9613, type: 3}
+      propertyPath: m_EnableInputTracking
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

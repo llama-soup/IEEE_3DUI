@@ -471,7 +471,7 @@
                 {
                     "name": "second",
                     "id": "ed03d944-4c09-4c38-8b68-5c844e18ca7c",
-                    "path": "<XRController>{LeftHand}/deviceRotation",
+                    "path": "<XRController>{LeftHand}/{DeviceRotation}",
                     "interactions": "",
                     "processors": "",
                     "groups": "Generic XR Controller",
@@ -515,7 +515,7 @@
                 {
                     "name": "second",
                     "id": "6580b669-0651-401c-9779-85ef22689130",
-                    "path": "<XRController>{LeftHand}/devicePosition",
+                    "path": "<XRController>{LeftHand}/{DevicePosition}",
                     "interactions": "",
                     "processors": "",
                     "groups": "Generic XR Controller",

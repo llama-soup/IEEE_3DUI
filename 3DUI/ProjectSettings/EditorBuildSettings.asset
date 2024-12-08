@@ -15,5 +15,6 @@ EditorBuildSettings:
     path: Assets/Scenes/WirePuzzle.unity
     guid: 2c48100b237a8a54d862094fe7ff8e01
   m_configObjects:
+    com.unity.input.settings: {fileID: 11400000, guid: e95b662d364323a4cbef7c0288e86b82, type: 2}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 17ed30c671fd09a40b64a32714758eaf, type: 2}
     com.unity.xr.openxr.settings4: {fileID: 11400000, guid: 497eeaae7b804fa48bc80eae0fe4d301, type: 2}
