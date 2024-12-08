@@ -16,6 +16,7 @@ Shader "Custom/Portal2d"
             #pragma vertex vert
             #pragma fragment frag
             #pragma multi_compile_instancing
+            #pragma multi_compile _ UNITY_SINGLE_PASS_STEREO STEREO_INSTANCING_ON STEREO_MULTIVIEW_ON
             
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
 
@@ -30,6 +31,7 @@ Shader "Custom/Portal2d"
             {
                 float4 positionCS : SV_POSITION;
                 float4 screenPos : TEXCOORD0;
+                UNITY_VERTEX_INPUT_INSTANCE_ID
                 UNITY_VERTEX_OUTPUT_STEREO
             };
 
@@ -42,6 +44,7 @@ Shader "Custom/Portal2d"
             {
                 Varyings output;
                 UNITY_SETUP_INSTANCE_ID(input);
+                UNITY_TRANSFER_INSTANCE_ID(input, output);
                 UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(output);
                 
                 output.positionCS = TransformObjectToHClip(input.positionOS.xyz);
@@ -51,13 +54,15 @@ Shader "Custom/Portal2d"
 
             float4 frag(Varyings input) : SV_Target
             {
+                UNITY_SETUP_INSTANCE_ID(input);
                 UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(input);
+                
                 float2 screenSpaceUV = input.screenPos.xy / input.screenPos.w;
                 
-                if (unity_StereoEyeIndex == 0)
-                    return SAMPLE_TEXTURE2D(_LeftEyeTex, sampler_LeftEyeTex, screenSpaceUV);
-                else
-                    return SAMPLE_TEXTURE2D(_RightEyeTex, sampler_RightEyeTex, screenSpaceUV);
+                uint eyeIndex = unity_StereoEyeIndex;
+                return eyeIndex == 0 ? 
+                    SAMPLE_TEXTURE2D(_LeftEyeTex, sampler_LeftEyeTex, screenSpaceUV) :
+                    SAMPLE_TEXTURE2D(_RightEyeTex, sampler_RightEyeTex, screenSpaceUV);
             }
             ENDHLSL
         }

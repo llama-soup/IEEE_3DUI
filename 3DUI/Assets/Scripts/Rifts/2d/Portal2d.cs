@@ -15,8 +15,8 @@ public class Portal2d : MonoBehaviour
     private RenderTexture rightRenderTexture;
     
     // Standard IPD (Interpupillary Distance)
-    private readonly Vector3 leftEyeOffset = new Vector3(0.4f, 0, 0);
-    private readonly Vector3 rightEyeOffset = new Vector3(-0.4f, 0, 0);
+    private readonly Vector3 leftEyeOffset = new Vector3(0.032f, 0, 0);
+    private readonly Vector3 rightEyeOffset = new Vector3(-0.032f, 0, 0);
 
     void Start()
     {
@@ -31,10 +31,13 @@ public class Portal2d : MonoBehaviour
         // Setup left eye camera
         leftEyeCamera = CreateEyeCamera("LeftEyeCamera", leftEyeOffset);
         rightEyeCamera = CreateEyeCamera("RightEyeCamera", rightEyeOffset);
+
+        leftEyeCamera.transform.localRotation = Quaternion.Euler(0, -8f, 0);
+        rightEyeCamera.transform.localRotation = Quaternion.Euler(0, 8f, 0);
         
         // Create and setup render textures
-        leftRenderTexture = new RenderTexture(Screen.width/2, Screen.height, 24, RenderTextureFormat.DefaultHDR);
-        rightRenderTexture = new RenderTexture(Screen.width/2, Screen.height, 24, RenderTextureFormat.DefaultHDR);
+        leftRenderTexture = new RenderTexture(Screen.width * 2, Screen.height * 4, 24, RenderTextureFormat.DefaultHDR);
+        rightRenderTexture = new RenderTexture(Screen.width * 2, Screen.height * 4, 24, RenderTextureFormat.DefaultHDR);
         
         leftEyeCamera.targetTexture = leftRenderTexture;
         rightEyeCamera.targetTexture = rightRenderTexture;
@@ -58,8 +61,6 @@ public class Portal2d : MonoBehaviour
 
     void LateUpdate()
     {
-        // leftEyeCamera.fieldOfView = playerCamera.fieldOfView;
-        // rightEyeCamera.fieldOfView = playerCamera.fieldOfView;
         // Calculate parent position and rotation
         Vector3 playerOffsetFromPortal = transform.InverseTransformPoint(playerCamera.transform.position);
         playerOffsetFromPortal = new Vector3(-playerOffsetFromPortal.x, playerOffsetFromPortal.y, -playerOffsetFromPortal.z);
