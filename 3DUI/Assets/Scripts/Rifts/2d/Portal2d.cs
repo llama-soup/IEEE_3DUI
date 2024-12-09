@@ -119,4 +119,52 @@ public class Portal2d : MonoBehaviour
         if (rightRenderTexture != null)
             rightRenderTexture.Release();
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Interactable"))
+        {
+            // Get the direction from portal to object
+            Vector3 portalToObject = other.transform.position - transform.position;
+            float dotProduct = Vector3.Dot(transform.forward, portalToObject);
+
+            // Only teleport if object is entering from the front
+            if (dotProduct < 0f)
+            {
+                // Calculate position relative to this portal
+                Vector3 objectOffsetFromPortal = transform.InverseTransformPoint(other.transform.position);
+                
+                // Flip the x and z coordinates for proper exit orientation
+                objectOffsetFromPortal = new Vector3(-objectOffsetFromPortal.x, 
+                                                objectOffsetFromPortal.y, 
+                                                -objectOffsetFromPortal.z);
+                
+                // Calculate the new position relative to other portal
+                Vector3 newPosition = otherPortal.transform.TransformPoint(objectOffsetFromPortal);
+                
+                // Calculate rotation
+                Quaternion relativeRot = Quaternion.Inverse(transform.rotation) * other.transform.rotation;
+                Quaternion newRotation = otherPortal.transform.rotation * Quaternion.Euler(0, 180, 0) * relativeRot;
+                
+                // If object has rigidbody, preserve velocity through portal
+                Rigidbody rb = other.GetComponent<Rigidbody>();
+                if (rb != null)
+                {
+                    Vector3 relativeVelocity = transform.InverseTransformDirection(rb.velocity);
+                    relativeVelocity = new Vector3(-relativeVelocity.x, relativeVelocity.y, -relativeVelocity.z);
+                    Vector3 newVelocity = otherPortal.transform.TransformDirection(relativeVelocity);
+                    
+                    // Teleport and set new velocity
+                    rb.position = newPosition;
+                    rb.rotation = newRotation;
+                    rb.velocity = newVelocity;
+                }
+                else
+                {
+                    // Teleport non-rigidbody object
+                    other.transform.SetPositionAndRotation(newPosition, newRotation);
+                }
+            }
+        }
+    }
 }
