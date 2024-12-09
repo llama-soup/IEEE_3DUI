@@ -18,6 +18,12 @@ public class Portal2d : MonoBehaviour
     private readonly Vector3 leftEyeOffset = new Vector3(0.032f, 0, 0);
     private readonly Vector3 rightEyeOffset = new Vector3(-0.032f, 0, 0);
 
+    [Header("Debug")]
+    public bool showDebugPlanes = false;
+    public float debugPlaneSize = 1f;
+    public Color portalPlaneColor = Color.blue;
+    public Color clipPlaneColor = Color.red;
+
     void Start()
     {
 
@@ -36,8 +42,8 @@ public class Portal2d : MonoBehaviour
         rightEyeCamera.transform.localRotation = Quaternion.Euler(0, 8f, 0);
         
         // Create and setup render textures
-        leftRenderTexture = new RenderTexture(Screen.width * 2, Screen.height * 4, 24, RenderTextureFormat.DefaultHDR);
-        rightRenderTexture = new RenderTexture(Screen.width * 2, Screen.height * 4, 24, RenderTextureFormat.DefaultHDR);
+        leftRenderTexture = new RenderTexture(Screen.width, Screen.height * 2, 72, RenderTextureFormat.DefaultHDR);
+        rightRenderTexture = new RenderTexture(Screen.width, Screen.height * 2, 72, RenderTextureFormat.DefaultHDR);
         
         leftEyeCamera.targetTexture = leftRenderTexture;
         rightEyeCamera.targetTexture = rightRenderTexture;
@@ -55,8 +61,42 @@ public class Portal2d : MonoBehaviour
         
         Camera cam = eyeCam.AddComponent<Camera>();
         cam.enabled = true;
-        cam.fieldOfView = 90f;
+        cam.fieldOfView = 88f;
         return cam;
+    }
+
+    private void SetNearClipPlane(Camera portalEyeCamera, bool isLeftEye) 
+    {
+        Transform clipPlane = transform;
+        Camera playerEyeCamera = isLeftEye ? leftEyeCamera : rightEyeCamera;
+        
+        // Calculate dot product to determine which side of the portal we're on
+        int dot = System.Math.Sign(Vector3.Dot(clipPlane.forward, 
+            transform.position - portalEyeCamera.transform.position));
+
+        // Convert portal plane to camera space
+        Vector3 camSpacePos = portalEyeCamera.worldToCameraMatrix.MultiplyPoint(clipPlane.position);
+        Vector3 camSpaceNormal = portalEyeCamera.worldToCameraMatrix.MultiplyVector(clipPlane.forward) * dot;
+        float camSpaceDst = -Vector3.Dot(camSpacePos, camSpaceNormal);
+
+        // Skip oblique projection if too close to prevent artifacts
+        if (Mathf.Abs(camSpaceDst) > 0.3f) 
+        {
+            Vector4 clipPlaneCameraSpace = new Vector4(
+                camSpaceNormal.x, 
+                camSpaceNormal.y, 
+                camSpaceNormal.z, 
+                camSpaceDst
+            );
+
+            // Calculate oblique projection matrix for specific eye
+            portalEyeCamera.projectionMatrix = playerEyeCamera.CalculateObliqueMatrix(clipPlaneCameraSpace);
+        } 
+        else 
+        {
+            // Reset to original eye-specific projection
+            portalEyeCamera.projectionMatrix = playerEyeCamera.projectionMatrix;
+        }
     }
 
     void LateUpdate()
@@ -71,6 +111,11 @@ public class Portal2d : MonoBehaviour
 
         // Update parent transform (cameras will follow)
         portalCameraParent.SetPositionAndRotation(newPosition, newRotation);
+
+        // Apply oblique projection to both eye cameras
+        float distanceToPortal = Vector3.Distance(playerCamera.transform.position, transform.position);
+        SetNearClipPlane(leftEyeCamera, true);
+        SetNearClipPlane(rightEyeCamera, false);
     }
 
     void OnDestroy()

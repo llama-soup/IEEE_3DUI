@@ -39,6 +39,6 @@ public class VRRigReferences : MonoBehaviour
         Vector3 position = positionAction.action.ReadValue<Vector3>();
         Quaternion rotation = rotationAction.action.ReadValue<Quaternion>();
 
-        Debug.Log($"Position: {position}, Rotation: {rotation}");
+        // Debug.Log($"Position: {position}, Rotation: {rotation}");
     }
 }
