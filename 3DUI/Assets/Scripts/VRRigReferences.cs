@@ -34,11 +34,5 @@ public class VRRigReferences : MonoBehaviour
         rotationAction.action.Disable();
     }
 
-    private void Update()
-    {
-        Vector3 position = positionAction.action.ReadValue<Vector3>();
-        Quaternion rotation = rotationAction.action.ReadValue<Quaternion>();
 
-        // Debug.Log($"Position: {position}, Rotation: {rotation}");
-    }
 }

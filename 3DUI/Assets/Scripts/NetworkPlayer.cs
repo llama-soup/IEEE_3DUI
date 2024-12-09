@@ -228,7 +228,10 @@ public class NetworkPlayer : NetworkBehaviour
     }
 
     void SetClientPos(GameObject playerToMove){
-        playerToMove.transform.position = futurePlayerSpawnPoint.transform.position;
+        if(futurePlayerSpawnPoint != null){
+            playerToMove.transform.position = futurePlayerSpawnPoint.transform.position;
+        }
+
     }
 
     void Update()
