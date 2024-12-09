@@ -227,6 +227,7 @@ public class NetworkPlayer : NetworkBehaviour
         DynamicGI.UpdateEnvironment();
     }
 
+
     void SetClientPos(GameObject playerToMove){
         if(futurePlayerSpawnPoint != null){
             playerToMove.transform.position = futurePlayerSpawnPoint.transform.position;

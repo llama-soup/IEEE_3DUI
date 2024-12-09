@@ -2837,6 +2837,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3881662353963076135, guid: 39b547fe254edda4fa3b5c140a316486, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.39011997
+      objectReference: {fileID: 0}
+    - target: {fileID: 3881662353963076135, guid: 39b547fe254edda4fa3b5c140a316486, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.39012006
+      objectReference: {fileID: 0}
+    - target: {fileID: 3881662353963076135, guid: 39b547fe254edda4fa3b5c140a316486, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.39012
+      objectReference: {fileID: 0}
     - target: {fileID: 3970627969468048043, guid: 39b547fe254edda4fa3b5c140a316486, type: 3}
       propertyPath: head.vrTarget
       value: 
@@ -2851,7 +2863,7 @@ PrefabInstance:
       objectReference: {fileID: 7291680657583883918}
     - target: {fileID: 3970627969468048043, guid: 39b547fe254edda4fa3b5c140a316486, type: 3}
       propertyPath: head.trackingPositionOffset.z
-      value: -0.1
+      value: -0.04
       objectReference: {fileID: 0}
     - target: {fileID: 3970627969468048043, guid: 39b547fe254edda4fa3b5c140a316486, type: 3}
       propertyPath: head.trackingRotationOffset.y
