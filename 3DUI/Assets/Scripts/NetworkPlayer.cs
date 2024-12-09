@@ -146,6 +146,7 @@ public class NetworkPlayer : NetworkBehaviour
         if(IsOwner)
         {
             isRecording = true;
+            Debug.Log(microphone);
             #if !UNITY_WEBGL
             clip = Microphone.Start(microphone, false, duration, 44100);
             SendReply();
@@ -175,8 +176,8 @@ public class NetworkPlayer : NetworkBehaviour
             if(language == "Select a Language"){
                 language = "English";
             }
+            Debug.Log(language);
             newMessage.Content = prompt + " Translate the message from English to " + language + ".\n" + messageDisplay.text;
-            //Debug.Log(newMessage.Content);
         }
         
         messages.Add(newMessage);
