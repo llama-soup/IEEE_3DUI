@@ -18,12 +18,6 @@ public class Portal2d : MonoBehaviour
     private readonly Vector3 leftEyeOffset = new Vector3(0.032f, 0, 0);
     private readonly Vector3 rightEyeOffset = new Vector3(-0.032f, 0, 0);
 
-    [Header("Debug")]
-    public bool showDebugPlanes = false;
-    public float debugPlaneSize = 1f;
-    public Color portalPlaneColor = Color.blue;
-    public Color clipPlaneColor = Color.red;
-
     void Start()
     {
 
