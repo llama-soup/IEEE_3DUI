@@ -22,6 +22,8 @@ public class NetworkPlayer : NetworkBehaviour
 
     public GameObject futurePlayerSpawnPoint;
 
+    public GameObject presentPlayerSpawnPoint;
+
     public Renderer[] meshToDisable;
     //Traslate variables
     private GameObject languageSetting;
@@ -60,12 +62,20 @@ public class NetworkPlayer : NetworkBehaviour
             {
                 if (item != null) item.enabled = false;
             }
+
+            Transform spawnPoint = IsServer ?  presentPlayerSpawnPoint.transform: futurePlayerSpawnPoint.transform;
+            Transform playerTransform = this.transform;
+
+            playerTransform.position = spawnPoint.position;
+            playerTransform.rotation = spawnPoint.rotation;
+
+            if (!IsServer){
+                UpdateClientEnvironment();
+                player_ID = NetworkManager.Singleton.ConnectedClients.Count;
+                CreateMessageBox();
+            }
         }
-        if (IsClient){
-            UpdateClientEnvironment();
-            player_ID = NetworkManager.Singleton.ConnectedClients.Count;
-            CreateMessageBox();
-        }
+
         //Boolean that stops the audio recording.
         stop = false;
 
@@ -221,6 +231,7 @@ public class NetworkPlayer : NetworkBehaviour
 
     void UpdateClientEnvironment(){
         // Set HDR to not cloudy day if we are the client (aka not the server, player 1)(aka player 2)
+        Debug.Log("Client environment updated!");
         RenderSettings.fogColor = futureFogcolor;
         RenderSettings.fogDensity = futureFogDensity;
         RenderSettings.skybox = futureSkybox;
