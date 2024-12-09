@@ -55,7 +55,7 @@ public class Portal2d : MonoBehaviour
         
         Camera cam = eyeCam.AddComponent<Camera>();
         cam.enabled = true;
-        cam.fieldOfView = 88f;
+        cam.fieldOfView = 95f;
         return cam;
     }
 
