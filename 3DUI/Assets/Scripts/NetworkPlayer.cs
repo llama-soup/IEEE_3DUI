@@ -166,7 +166,13 @@ public class NetworkPlayer : NetworkBehaviour
         //Makes the prompt
         if (messages.Count == 0) 
         {
-            if(language == "Select a Language"){
+            if(player_ID == 0){
+                language = mainChatScript.languages[1];
+            }
+            else if(player_ID == 1){
+                language = mainChatScript.languages[0];
+            }
+            if(language == "Select a Language" || language == null){
                 language = "English";
             }
             Debug.Log(language);
@@ -293,6 +299,9 @@ void UpdatePlayerPositionClientRpc(Vector3 position, Quaternion rotation)
         {
             microphones = GameObject.FindWithTag("Microphone Dropdown");
             UpdateMicrophone();
+        }
+        if(mainText == null && GameObject.FindWithTag("Chat") != null){
+            IntializeMainText();
         }
         //Process for recording the messages
         if (isRecording)

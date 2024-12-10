@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.XR;
+using System.Collections;
 
 public class Portal2d : MonoBehaviour
 {
@@ -38,8 +39,8 @@ public class Portal2d : MonoBehaviour
         rightEyeCamera.transform.localRotation = Quaternion.Euler(0, 8f, 0);
         
         // Create and setup render textures
-        leftRenderTexture = new RenderTexture(Screen.width, Screen.height * 2, 72, RenderTextureFormat.DefaultHDR);
-        rightRenderTexture = new RenderTexture(Screen.width, Screen.height * 2, 72, RenderTextureFormat.DefaultHDR);
+        leftRenderTexture = new RenderTexture(Screen.width, Screen.height * 2, 24, RenderTextureFormat.DefaultHDR);
+        rightRenderTexture = new RenderTexture(Screen.width, Screen.height * 2, 24, RenderTextureFormat.DefaultHDR);
         
         leftEyeCamera.targetTexture = leftRenderTexture;
         rightEyeCamera.targetTexture = rightRenderTexture;
@@ -127,7 +128,6 @@ public class Portal2d : MonoBehaviour
         if (other.CompareTag("Interactable"))
         {
             // Check cooldown
-            Debug.Log($"Difference in time: {Time.time - lastTeleportTime}");
             if (Time.time - lastTeleportTime < TELEPORT_COOLDOWN)
                 return;
 
@@ -135,7 +135,6 @@ public class Portal2d : MonoBehaviour
             Vector3 portalToObject = other.transform.position - transform.position;
             float dotProduct = Vector3.Dot(transform.forward, portalToObject);
 
-            Debug.Log("Teleported Object");
             // Calculate position relative to this portal
             Vector3 objectOffsetFromPortal = transform.InverseTransformPoint(other.transform.position);
             
@@ -175,6 +174,59 @@ public class Portal2d : MonoBehaviour
 
             // Update last teleport time
             lastTeleportTime = Time.time;
+        }
+    }
+
+    void OnEnable()
+    {
+        // Store original child scales and set initial inverse scale
+        foreach (Transform child in transform)
+        {
+            child.localScale = Vector3.one * 1000f; // Inverse of 0.001f
+        }
+        
+        // Start with a very small scale
+        transform.localScale = Vector3.one * 0.001f;
+        StartCoroutine(ScalePortalAnimation());
+    }
+
+    private IEnumerator ScalePortalAnimation()
+    {
+        float elapsedTime = 0;
+        float duration = 2f;
+        Vector3 startScale = Vector3.one * 0.001f;
+        Vector3 targetScale = new Vector3(2f, 1.33f, 1f);
+
+        while (elapsedTime < duration)
+        {
+            elapsedTime += Time.deltaTime;
+            float progress = elapsedTime / duration;
+            Vector3 currentScale = Vector3.Lerp(startScale, targetScale, progress);
+            transform.localScale = currentScale;
+
+            // Update children scales inversely
+            foreach (Transform child in transform)
+            {
+                child.localScale = new Vector3(
+                    1f / currentScale.x,
+                    1f / currentScale.y,
+                    1f / currentScale.z
+                );
+            }
+            
+            yield return null;
+        }
+
+        transform.localScale = targetScale;
+        
+        // Set final inverse scale for children
+        foreach (Transform child in transform)
+        {
+            child.localScale = new Vector3(
+                1f / targetScale.x,
+                1f / targetScale.y,
+                1f / targetScale.z
+            );
         }
     }
 }
