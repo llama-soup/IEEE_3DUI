@@ -12689,6 +12689,14 @@ PrefabInstance:
       propertyPath: m_TagString
       value: DoorTrigger
       objectReference: {fileID: 0}
+    - target: {fileID: 1089147846947386866, guid: 3b54bde06c700394397fb99d60d2aa89, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 51.05276
+      objectReference: {fileID: 0}
+    - target: {fileID: 1089147846947386866, guid: 3b54bde06c700394397fb99d60d2aa89, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.177
+      objectReference: {fileID: 0}
     - target: {fileID: 1155441867640657205, guid: 3b54bde06c700394397fb99d60d2aa89, type: 3}
       propertyPath: m_IsTrigger
       value: 1
@@ -12785,6 +12793,10 @@ PrefabInstance:
       propertyPath: m_IsTrigger
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3049857612041225297, guid: 3b54bde06c700394397fb99d60d2aa89, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 279b474aa9304ba4db344b13c9083e3b, type: 2}
     - target: {fileID: 3209898731815688083, guid: 3b54bde06c700394397fb99d60d2aa89, type: 3}
       propertyPath: m_TagString
       value: DoorTrigger
@@ -12945,6 +12957,10 @@ PrefabInstance:
       propertyPath: m_IsTrigger
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8263061776724081892, guid: 3b54bde06c700394397fb99d60d2aa89, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 279b474aa9304ba4db344b13c9083e3b, type: 2}
     - target: {fileID: 8433730438054519339, guid: 3b54bde06c700394397fb99d60d2aa89, type: 3}
       propertyPath: m_IsTrigger
       value: 1
@@ -12957,6 +12973,10 @@ PrefabInstance:
       propertyPath: m_IsTrigger
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8928347101404025081, guid: 3b54bde06c700394397fb99d60d2aa89, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 279b474aa9304ba4db344b13c9083e3b, type: 2}
     - target: {fileID: 8949227896329473575, guid: 3b54bde06c700394397fb99d60d2aa89, type: 3}
       propertyPath: m_LocalScale.z
       value: 50
