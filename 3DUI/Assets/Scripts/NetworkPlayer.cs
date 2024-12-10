@@ -10,6 +10,8 @@ using Samples.Whisper;
 using UnityEngine.SceneManagement;
 using UnityEngine.XR.Hands.OpenXR;
 using Unity.VisualScripting;
+using JetBrains.Annotations;
+using Unity.XR.CoreUtils;
 
 public class NetworkPlayer : NetworkBehaviour
 {
@@ -43,6 +45,8 @@ public class NetworkPlayer : NetworkBehaviour
     
     private AudioClip clip;
     private bool isRecording;
+
+    public XROrigin xrOrigin;
     private bool stop;
     private float time;
     private OpenAIApi openai = new OpenAIApi();
@@ -82,12 +86,14 @@ public class NetworkPlayer : NetworkBehaviour
     {
 
 
-            IntializeMainText();
 
-            if(!IsServer){
-                SetClientPos();
-                UpdateClientEnvironment();
-            }
+
+        if(!IsServer){
+            UpdateClientEnvironment();
+            SetClientPos();
+        }
+
+        IntializeMainText();
     }
 
     private void IntializeMainText(){
@@ -223,21 +229,42 @@ public class NetworkPlayer : NetworkBehaviour
 
 
     void SetClientPos(){
-            futurePlayerSpawnPoint = GameObject.Find("Future Player Spawn Point");
-            presentPlayerSpawnPoint = GameObject.Find("Present Player Spawn Point");
+        futurePlayerSpawnPoint = GameObject.Find("Future Player Spawn Point");
+        presentPlayerSpawnPoint = GameObject.Find("Present Player Spawn Point");
 
-            Debug.Log("Future Player Spawn Point: " + futurePlayerSpawnPoint.transform);
-            Debug.Log("Present Player Spawn Point: " + presentPlayerSpawnPoint.transform);
-            Transform spawnPoint = IsServer ? presentPlayerSpawnPoint.transform : futurePlayerSpawnPoint.transform;
-            Transform playerTransform = this.transform;
+        Debug.Log("Future Player Spawn Point: " + futurePlayerSpawnPoint.transform);
+        Debug.Log("Present Player Spawn Point: " + presentPlayerSpawnPoint.transform);
+        Transform spawnPoint = IsServer ? presentPlayerSpawnPoint.transform : futurePlayerSpawnPoint.transform;
 
-            playerTransform.position = spawnPoint.position;
-            playerTransform.rotation = spawnPoint.rotation;
+        xrOrigin.MoveCameraToWorldLocation(spawnPoint.position);
+        xrOrigin.transform.rotation = spawnPoint.rotation;
 
+        Debug.Log($"XR Origin moved to position: {xrOrigin.transform.position}, rotation: {xrOrigin.transform.rotation}");
 
+        transform.position = spawnPoint.position;
+        transform.rotation = spawnPoint.rotation;
+
+        Debug.Log($"Client Transform: {xrOrigin.transform.position}, rotation: {xrOrigin.transform.rotation}");
 
 
     }
+
+[ServerRpc]
+void RequestMoveServerRpc(Vector3 position, Quaternion rotation)
+//This function and the client one below it handle moving the Network Player object for other clients, to make sure other clients see the other player model move too
+{
+    UpdatePlayerPositionClientRpc(position, rotation);
+}
+
+[ClientRpc]
+void UpdatePlayerPositionClientRpc(Vector3 position, Quaternion rotation)
+{
+    if (!IsOwner)
+    {
+        transform.position = position;
+        transform.rotation = rotation;
+    }
+}
 
     void Update()
     {
