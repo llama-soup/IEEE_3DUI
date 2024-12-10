@@ -236,6 +236,8 @@ public class NetworkPlayer : NetworkBehaviour
         Debug.Log("Present Player Spawn Point: " + presentPlayerSpawnPoint.transform);
         Transform spawnPoint = IsServer ? presentPlayerSpawnPoint.transform : futurePlayerSpawnPoint.transform;
 
+        xrOrigin = GameObject.Find("XR Origin (VR)").GetComponent<XROrigin>();
+
         xrOrigin.MoveCameraToWorldLocation(spawnPoint.position);
         xrOrigin.transform.rotation = spawnPoint.rotation;
 
