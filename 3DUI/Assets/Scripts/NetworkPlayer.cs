@@ -52,6 +52,9 @@ public class NetworkPlayer : NetworkBehaviour
     private OpenAIApi openai = new OpenAIApi();
     private GameObject mainText;
     private ChatBox mainChatScript;
+    public GameObject canvasPrefab; // Assign this in the Inspector
+    private GameObject playerCanvas;
+    private TMP_Text playerChat;
     //end of translate variables
     private NetworkVariable<Vector3> netRootPosition = new NetworkVariable<Vector3>();
     private NetworkVariable<Quaternion> netRootRotation = new NetworkVariable<Quaternion>();
@@ -76,6 +79,9 @@ public class NetworkPlayer : NetworkBehaviour
             language = "english";
             //Boolean that stops the audio recording.
             stop = false;
+            playerCanvas = Instantiate(canvasPrefab, transform);
+            playerCanvas.transform.localPosition = new Vector3(0, 1.5f, 2.0f); // Adjust position relative to the player
+            playerChat = playerCanvas.GetComponentInChildren<TMP_Text>();
         }
 
         SceneManager.sceneLoaded += OnSceneLoaded;
@@ -283,6 +289,7 @@ void UpdatePlayerPositionClientRpc(Vector3 position, Quaternion rotation)
         {
             UpdateLocalTransforms();
             SyncPositionsServerRpc();
+            playerChat.text = mainChatScript.getText();
         }
         else
         {
