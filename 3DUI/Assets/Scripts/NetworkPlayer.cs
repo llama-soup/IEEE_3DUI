@@ -72,9 +72,6 @@ public class NetworkPlayer : NetworkBehaviour
             language = "english";
             //Boolean that stops the audio recording.
             stop = false;
-            mainText = GameObject.Find("Main Chatbox");
-            mainChatScript = mainText.GetComponent<ChatBox>();
-            mainChatScript.Updatelanguage(player_ID, language);
         }
 
         SceneManager.sceneLoaded += OnSceneLoaded;
@@ -94,9 +91,17 @@ public class NetworkPlayer : NetworkBehaviour
             playerTransform.position = spawnPoint.position;
             playerTransform.rotation = spawnPoint.rotation;
 
+            IntializeMainText();
+
             if(!IsServer){
                 UpdateClientEnvironment();
             }
+    }
+
+    private void IntializeMainText(){
+        mainText = GameObject.Find("Main Chatbox");
+        mainChatScript = mainText.GetComponent<ChatBox>();
+        mainChatScript.Updatelanguage(player_ID, language);
     }
 
     //Creates the message dissplay for the player
