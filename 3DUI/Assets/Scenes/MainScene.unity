@@ -12223,6 +12223,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: 2nd Player Room
       objectReference: {fileID: 0}
+    - target: {fileID: 8258004549265261600, guid: 0d7b5cc457a8ead49b7c8a16c5d101c2, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 108.7112
+      objectReference: {fileID: 0}
+    - target: {fileID: 8258004549265261600, guid: 0d7b5cc457a8ead49b7c8a16c5d101c2, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -169.2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 3536558439394116602, guid: 0d7b5cc457a8ead49b7c8a16c5d101c2, type: 3}
