@@ -11,6 +11,9 @@ TagManager:
   - Language Options
   - Microphone Dropdown
   - Chat
+  - DoorTrigger
+  - PickUp
+  - Controller
   layers:
   - Default
   - TransparentFX

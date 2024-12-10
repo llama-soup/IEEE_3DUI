@@ -12515,6 +12515,30 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 212705813177831093, guid: 3b54bde06c700394397fb99d60d2aa89, type: 3}
+      propertyPath: m_TagString
+      value: DoorTrigger
+      objectReference: {fileID: 0}
+    - target: {fileID: 472805512602496932, guid: 3b54bde06c700394397fb99d60d2aa89, type: 3}
+      propertyPath: m_TagString
+      value: DoorTrigger
+      objectReference: {fileID: 0}
+    - target: {fileID: 555138699625909666, guid: 3b54bde06c700394397fb99d60d2aa89, type: 3}
+      propertyPath: m_TagString
+      value: DoorTrigger
+      objectReference: {fileID: 0}
+    - target: {fileID: 788188987070634514, guid: 3b54bde06c700394397fb99d60d2aa89, type: 3}
+      propertyPath: m_TagString
+      value: DoorTrigger
+      objectReference: {fileID: 0}
+    - target: {fileID: 893891857126224203, guid: 3b54bde06c700394397fb99d60d2aa89, type: 3}
+      propertyPath: m_TagString
+      value: DoorTrigger
+      objectReference: {fileID: 0}
+    - target: {fileID: 1251009394895155108, guid: 3b54bde06c700394397fb99d60d2aa89, type: 3}
+      propertyPath: m_TagString
+      value: DoorTrigger
+      objectReference: {fileID: 0}
     - target: {fileID: 1711452281513387659, guid: 3b54bde06c700394397fb99d60d2aa89, type: 3}
       propertyPath: m_LocalPosition.x
       value: -44.117676
@@ -12555,9 +12579,49 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1763735378979078765, guid: 3b54bde06c700394397fb99d60d2aa89, type: 3}
+      propertyPath: m_TagString
+      value: DoorTrigger
+      objectReference: {fileID: 0}
+    - target: {fileID: 1876964711642618963, guid: 3b54bde06c700394397fb99d60d2aa89, type: 3}
+      propertyPath: m_TagString
+      value: DoorTrigger
+      objectReference: {fileID: 0}
+    - target: {fileID: 2344782155741798527, guid: 3b54bde06c700394397fb99d60d2aa89, type: 3}
+      propertyPath: m_TagString
+      value: DoorTrigger
+      objectReference: {fileID: 0}
+    - target: {fileID: 3209898731815688083, guid: 3b54bde06c700394397fb99d60d2aa89, type: 3}
+      propertyPath: m_TagString
+      value: DoorTrigger
+      objectReference: {fileID: 0}
+    - target: {fileID: 3352446587559466146, guid: 3b54bde06c700394397fb99d60d2aa89, type: 3}
+      propertyPath: m_TagString
+      value: DoorTrigger
+      objectReference: {fileID: 0}
     - target: {fileID: 3352546748929100158, guid: 3b54bde06c700394397fb99d60d2aa89, type: 3}
       propertyPath: m_Name
       value: Maze P-Parent
+      objectReference: {fileID: 0}
+    - target: {fileID: 3352546748929100158, guid: 3b54bde06c700394397fb99d60d2aa89, type: 3}
+      propertyPath: m_TagString
+      value: DoorTrigger
+      objectReference: {fileID: 0}
+    - target: {fileID: 3412787778857481911, guid: 3b54bde06c700394397fb99d60d2aa89, type: 3}
+      propertyPath: m_TagString
+      value: DoorTrigger
+      objectReference: {fileID: 0}
+    - target: {fileID: 3768532492869526320, guid: 3b54bde06c700394397fb99d60d2aa89, type: 3}
+      propertyPath: m_TagString
+      value: DoorTrigger
+      objectReference: {fileID: 0}
+    - target: {fileID: 3881774023306349435, guid: 3b54bde06c700394397fb99d60d2aa89, type: 3}
+      propertyPath: m_TagString
+      value: DoorTrigger
+      objectReference: {fileID: 0}
+    - target: {fileID: 3892883683651022007, guid: 3b54bde06c700394397fb99d60d2aa89, type: 3}
+      propertyPath: m_TagString
+      value: DoorTrigger
       objectReference: {fileID: 0}
     - target: {fileID: 4151434360351696522, guid: 3b54bde06c700394397fb99d60d2aa89, type: 3}
       propertyPath: m_LocalPosition.x
@@ -12570,6 +12634,58 @@ PrefabInstance:
     - target: {fileID: 4151434360351696522, guid: 3b54bde06c700394397fb99d60d2aa89, type: 3}
       propertyPath: m_LocalPosition.z
       value: 49
+      objectReference: {fileID: 0}
+    - target: {fileID: 4244620516954706875, guid: 3b54bde06c700394397fb99d60d2aa89, type: 3}
+      propertyPath: m_TagString
+      value: DoorTrigger
+      objectReference: {fileID: 0}
+    - target: {fileID: 4265727207353016878, guid: 3b54bde06c700394397fb99d60d2aa89, type: 3}
+      propertyPath: m_TagString
+      value: DoorTrigger
+      objectReference: {fileID: 0}
+    - target: {fileID: 4949022229826232299, guid: 3b54bde06c700394397fb99d60d2aa89, type: 3}
+      propertyPath: m_TagString
+      value: DoorTrigger
+      objectReference: {fileID: 0}
+    - target: {fileID: 6287627569385064381, guid: 3b54bde06c700394397fb99d60d2aa89, type: 3}
+      propertyPath: m_TagString
+      value: DoorTrigger
+      objectReference: {fileID: 0}
+    - target: {fileID: 6704891543772625703, guid: 3b54bde06c700394397fb99d60d2aa89, type: 3}
+      propertyPath: m_TagString
+      value: DoorTrigger
+      objectReference: {fileID: 0}
+    - target: {fileID: 6710714634963149942, guid: 3b54bde06c700394397fb99d60d2aa89, type: 3}
+      propertyPath: m_TagString
+      value: DoorTrigger
+      objectReference: {fileID: 0}
+    - target: {fileID: 7329205847847036060, guid: 3b54bde06c700394397fb99d60d2aa89, type: 3}
+      propertyPath: m_TagString
+      value: DoorTrigger
+      objectReference: {fileID: 0}
+    - target: {fileID: 7382456366838872737, guid: 3b54bde06c700394397fb99d60d2aa89, type: 3}
+      propertyPath: m_TagString
+      value: DoorTrigger
+      objectReference: {fileID: 0}
+    - target: {fileID: 7696966801491353091, guid: 3b54bde06c700394397fb99d60d2aa89, type: 3}
+      propertyPath: m_TagString
+      value: DoorTrigger
+      objectReference: {fileID: 0}
+    - target: {fileID: 7882103948198566012, guid: 3b54bde06c700394397fb99d60d2aa89, type: 3}
+      propertyPath: m_TagString
+      value: DoorTrigger
+      objectReference: {fileID: 0}
+    - target: {fileID: 8006996910125085082, guid: 3b54bde06c700394397fb99d60d2aa89, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8038090675951390492, guid: 3b54bde06c700394397fb99d60d2aa89, type: 3}
+      propertyPath: m_TagString
+      value: DoorTrigger
+      objectReference: {fileID: 0}
+    - target: {fileID: 8482692496013634759, guid: 3b54bde06c700394397fb99d60d2aa89, type: 3}
+      propertyPath: m_TagString
+      value: DoorTrigger
       objectReference: {fileID: 0}
     - target: {fileID: 8949227896329473575, guid: 3b54bde06c700394397fb99d60d2aa89, type: 3}
       propertyPath: m_LocalScale.z

@@ -21,36 +21,32 @@ public class DoorXRInteract : MonoBehaviour
     {
         Debug.Log("ToggleDoor called!");
 
-        if (_renderer == null) {
+        if (_renderer == null)
+        {
             Debug.LogError("Renderer is missing on the door object!");
             return;
         }
-        
-    
 
         if (open)
         {
             _renderer.transform.Rotate(Vector3.up, 90);
-            _renderer.transform.position += new Vector3(
-                0.5f * _renderer.bounds.size.z, 
-                0, 
-                5 * _renderer.bounds.size.x
-            );
         }
         else
         {
             _renderer.transform.Rotate(Vector3.up, -90);
-            _renderer.transform.position += new Vector3(
-                -0.5f * _renderer.bounds.size.x, 
-                0, 
-                -5 * _renderer.bounds.size.z
-            );
         }
 
         open = !open;
         Debug.Log("Door toggled. Is Open: " + open);
     }
 
-   
-
+    // Trigger the door toggle when the controller enters the collider
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Controller")) // Ensure the controller has the "Controller" tag
+        {
+            Debug.Log("Controller entered the door trigger!");
+            ToggleDoor();
+        }
+    }
 }

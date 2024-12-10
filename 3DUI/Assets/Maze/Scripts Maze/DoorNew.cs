@@ -5,30 +5,47 @@ using UnityEngine;
 public class DoorNew : MonoBehaviour
 {
     private Renderer _renderer;
-    bool open = false;
-    // Start is called before the first frame update
+    private bool open = false;
+
     void Start()
     {
         _renderer = GetComponent<Renderer>();
+        if (_renderer == null)
+        {
+            Debug.LogError("Renderer is missing on the door object!");
+        }
     }
 
-    private void OnMouseDown()
-    { //test
-        //close
-        if(open)
+    public void ToggleDoor()
+    {
+        Debug.Log("ToggleDoor called!");
+
+        if (_renderer == null)
+        {
+            Debug.LogError("Renderer is missing on the door object!");
+            return;
+        }
+
+        if (open)
         {
             _renderer.transform.Rotate(Vector3.up, 90);
-            _renderer.transform.position = _renderer.transform.position + new Vector3(0.5f*GetComponent<Renderer>().bounds.size.z, 0, 5*GetComponent<Renderer>().bounds.size.x);
-            //
+            _renderer.transform.position += new Vector3(
+                0.5f * _renderer.bounds.size.z, 
+                0, 
+                5 * _renderer.bounds.size.x
+            );
         }
-        //opening
         else
         {
             _renderer.transform.Rotate(Vector3.up, -90);
-            _renderer.transform.position = _renderer.transform.position + new Vector3(-0.5f*GetComponent<Renderer>().bounds.size.x, 0, -5*GetComponent<Renderer>().bounds.size.z);
+            _renderer.transform.position += new Vector3(
+                -0.5f * _renderer.bounds.size.x, 
+                0, 
+                -5 * _renderer.bounds.size.z
+            );
         }
-        //
-        open = !open;
-    }
 
+        open = !open;
+        Debug.Log("Door toggled. Is Open: " + open);
+    }
 }

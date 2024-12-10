@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 using TMPro;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-
+using UnityEngine.XR.Interaction.Toolkit;
 
 public class PlayerController : MonoBehaviour
 {
@@ -68,6 +68,14 @@ public class PlayerController : MonoBehaviour
  // Store the X and Y components of the movement.
         movementX = movementVector.x; 
         movementY = movementVector.y; 
+    }
+
+     public void OnDoorTrigger(XRBaseInteractor interactor)
+    {
+        Debug.Log("Door interacted with! Timer started.");
+        timerStopped = false; // Start the timer
+        countText.gameObject.SetActive(true);
+        countdownText.gameObject.SetActive(true);
     }
 
     void SetCountText() 
