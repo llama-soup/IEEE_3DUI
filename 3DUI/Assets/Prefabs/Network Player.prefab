@@ -123,7 +123,8 @@ MonoBehaviour:
   language: 
   microphone: 
   player_ID: 0
-  messageDisplay: {fileID: 0}
+  xrOrigin: {fileID: 0}
+  canvasPrefab: {fileID: 1962908434356156160, guid: 703fbdd72228125429e375e77956e90b, type: 3}
 --- !u!114 &7825916495287122496
 MonoBehaviour:
   m_ObjectHideFlags: 0

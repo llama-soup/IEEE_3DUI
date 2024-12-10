@@ -41,4 +41,7 @@ public class ChatBox : MonoBehaviour
     public void Updatelanguage(int playerID, string language){
         languages[playerID] = language;
     }
+    public string getText(){
+        return textbox.text;
+    }
 }
