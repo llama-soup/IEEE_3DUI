@@ -57,7 +57,7 @@ public class PlayerController : MonoBehaviour
         countdownText.gameObject.SetActive(false);
         timerStopped = true;
         remainingTime = 120;
-    }
+    }     
  
  // This function is called when a move input is detected.
  void OnMove(InputValue movementValue)
