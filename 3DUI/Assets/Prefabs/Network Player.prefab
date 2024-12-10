@@ -516,6 +516,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3970627969468048043, guid: 39b547fe254edda4fa3b5c140a316486, type: 3}
+      propertyPath: head.vrTarget
+      value: 
+      objectReference: {fileID: 6845257498714641509}
+    - target: {fileID: 3970627969468048043, guid: 39b547fe254edda4fa3b5c140a316486, type: 3}
       propertyPath: leftHand.vrTarget
       value: 
       objectReference: {fileID: 6634557139056583761}
