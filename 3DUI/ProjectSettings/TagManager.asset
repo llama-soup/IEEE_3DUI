@@ -10,6 +10,7 @@ TagManager:
   - Keycard
   - Language Options
   - Microphone Dropdown
+  - Chat
   layers:
   - Default
   - TransparentFX

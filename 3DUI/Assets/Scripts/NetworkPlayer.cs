@@ -97,8 +97,10 @@ public class NetworkPlayer : NetworkBehaviour
     }
 
     private void IntializeMainText(){
-        mainText = GameObject.Find("Main Chatbox");
+        mainText = GameObject.FindWithTag("Chat");
+        Debug.Log(mainText);
         mainChatScript = mainText.GetComponent<ChatBox>();
+        Debug.Log(mainChatScript);
         mainChatScript.Updatelanguage(player_ID, language);
     }
 
@@ -188,8 +190,6 @@ public class NetworkPlayer : NetworkBehaviour
             message.Content = message.Content.Trim();
             
             messageTemp = message.Content;
-            Debug.Log(messageTemp);
-            Debug.Log(player_ID);
             Debug.Log(mainChatScript);
             mainChatScript.AddMessage(player_ID, messageTemp);
             messages.Clear();
