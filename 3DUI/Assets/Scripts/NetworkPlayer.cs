@@ -188,6 +188,9 @@ public class NetworkPlayer : NetworkBehaviour
             message.Content = message.Content.Trim();
             
             messageTemp = message.Content;
+            Debug.Log(messageTemp);
+            Debug.Log(player_ID);
+            Debug.Log(mainChatScript);
             mainChatScript.AddMessage(player_ID, messageTemp);
             messages.Clear();
         }
