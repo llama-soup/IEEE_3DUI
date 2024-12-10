@@ -63,6 +63,9 @@ public class NetworkPlayer : NetworkBehaviour
                 if (item != null) item.enabled = false;
             }
 
+
+            futurePlayerSpawnPoint = GameObject.Find("Future Player Spawn Point");
+            presentPlayerSpawnPoint = GameObject.Find("Present Player Spawn Point");
             Transform spawnPoint = IsServer ?  presentPlayerSpawnPoint.transform: futurePlayerSpawnPoint.transform;
             Transform playerTransform = this.transform;
 
