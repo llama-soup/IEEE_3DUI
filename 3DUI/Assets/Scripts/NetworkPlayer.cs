@@ -34,7 +34,7 @@ public class NetworkPlayer : NetworkBehaviour
     public String language;
     public String microphone;
     public int player_ID;
-    public TextMeshProUGUI messageDisplay;
+    private string messageTemp;
     private List<ChatMessage> messages = new List<ChatMessage>();
     private string prompt = "Act as a translator for the user. Your response should only include the translation requested. Don't break character. Don't ever mention that you are an AI model.";
     
@@ -46,6 +46,8 @@ public class NetworkPlayer : NetworkBehaviour
     private bool stop;
     private float time;
     private OpenAIApi openai = new OpenAIApi();
+    private GameObject mainText;
+    private ChatBox mainChatScript;
     //end of translate variables
     private NetworkVariable<Vector3> netRootPosition = new NetworkVariable<Vector3>();
     private NetworkVariable<Quaternion> netRootRotation = new NetworkVariable<Quaternion>();
@@ -66,17 +68,16 @@ public class NetworkPlayer : NetworkBehaviour
                 if (item != null) item.enabled = false;
             }
 
-
-            if (!IsServer){
-                player_ID = NetworkManager.Singleton.ConnectedClients.Count;
-                CreateMessageBox();
-            }
+            player_ID = NetworkManager.Singleton.ConnectedClients.Count;
+            language = "english";
+            //Boolean that stops the audio recording.
+            stop = false;
+            mainText = GameObject.Find("Main Chatbox");
+            mainChatScript = mainText.GetComponent<ChatBox>();
+            mainChatScript.Updatelanguage(player_ID, language);
         }
 
         SceneManager.sceneLoaded += OnSceneLoaded;
-
-        //Boolean that stops the audio recording.
-        stop = false;
 
     }
 
@@ -99,45 +100,14 @@ public class NetworkPlayer : NetworkBehaviour
     }
 
     //Creates the message dissplay for the player
-    void CreateMessageBox(){
-        // Create a new GameObject for the text
-        GameObject textObject = new GameObject("Translation Text");
-
-        // Attach the TextMeshPro component
-        TextMeshProUGUI messageDisplay = textObject.AddComponent<TextMeshProUGUI>();
-
-        // Set the text properties
-        messageDisplay.text = "";
-        messageDisplay.fontSize = 36;
-        messageDisplay.alignment = TextAlignmentOptions.Center;
-
-        // Get or create a Canvas in the scene
-        Canvas canvas = FindObjectOfType<Canvas>();
-        if (canvas == null)
-        {
-            GameObject canvasObject = new GameObject("Canvas");
-            canvas = canvasObject.AddComponent<Canvas>();
-            canvas.renderMode = RenderMode.ScreenSpaceOverlay;
-            canvasObject.AddComponent<CanvasScaler>();
-            canvasObject.AddComponent<GraphicRaycaster>();
-        }
-
-        // Set the text object's parent to the canvas
-        textObject.transform.SetParent(canvas.transform, false);
-
-        // Position the text at the bottom middle of the screen
-        RectTransform rectTransform = textObject.GetComponent<RectTransform>();
-        rectTransform.anchorMin = new Vector2(0.5f, 0);
-        rectTransform.anchorMax = new Vector2(0.5f, 0);
-        rectTransform.pivot = new Vector2(0.5f, 0);
-        rectTransform.anchoredPosition = new Vector2(0, 50); // Adjust the Y value for padding
-    }
+    
     //Updates the language to what the player selects in the menu
     void UpdateLanguage(){
         if (languageSetting.TryGetComponent(out TMP_Dropdown component))
         {
             int pickedIndex = component.value;
             language = component.options[pickedIndex].text;
+            mainChatScript.Updatelanguage(player_ID, language);
         }
         else
         {
@@ -185,7 +155,7 @@ public class NetworkPlayer : NetworkBehaviour
         var newMessage = new ChatMessage()
         {
             Role = "user",
-            Content = messageDisplay.text
+            Content = messageTemp
         };
 
         //Makes the prompt
@@ -195,12 +165,12 @@ public class NetworkPlayer : NetworkBehaviour
                 language = "English";
             }
             Debug.Log(language);
-            newMessage.Content = prompt + " Translate the message from English to " + language + ".\n" + messageDisplay.text;
+            newMessage.Content = prompt + " Translate the message from English to " + language + ".\n" + messageTemp;
         }
         
         messages.Add(newMessage);
         
-        messageDisplay.text = "";
+        messageTemp = "";
         
         //translates the message
         var completionResponse = await openai.CreateChatCompletion(new CreateChatCompletionRequest()
@@ -214,7 +184,8 @@ public class NetworkPlayer : NetworkBehaviour
             var message = completionResponse.Choices[0].Message;
             message.Content = message.Content.Trim();
             
-            messageDisplay.text = message.Content;
+            messageTemp = message.Content;
+            mainChatScript.AddMessage(player_ID, messageTemp);
             messages.Clear();
         }
         else
@@ -225,8 +196,6 @@ public class NetworkPlayer : NetworkBehaviour
     //Ends the recording and performs the audio to text transformation
     private async void EndRecording()
     {
-        messageDisplay.text = "Transcripting...";
-        
         #if !UNITY_WEBGL
         Microphone.End(null);
         #endif
@@ -242,10 +211,8 @@ public class NetworkPlayer : NetworkBehaviour
         };
         var res = await openai.CreateAudioTranslation(req);
 
-        messageDisplay.gameObject.SetActive(false);
-        messageDisplay.text = res.Text;
+        messageTemp = res.Text;
         SendReply();
-        messageDisplay.gameObject.SetActive(true);
     }
 
     void UpdateClientEnvironment(){
