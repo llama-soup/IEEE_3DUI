@@ -289,7 +289,9 @@ void UpdatePlayerPositionClientRpc(Vector3 position, Quaternion rotation)
         {
             UpdateLocalTransforms();
             SyncPositionsServerRpc();
-            playerChat.text = mainChatScript.getText();
+            if(mainChatScript != null){
+                playerChat.text = mainChatScript.getText();
+            }
         }
         else
         {
