@@ -125,7 +125,7 @@ public class Portal2d : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Interactable") | other.CompareTag("Keycard"))
+        if (other.CompareTag("Keycard") | other.CompareTag("Interactable"))
         {
             // Check cooldown
             if (Time.time - lastTeleportTime < TELEPORT_COOLDOWN)
