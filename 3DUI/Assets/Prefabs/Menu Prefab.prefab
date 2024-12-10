@@ -1939,7 +1939,7 @@ GameObject:
   - component: {fileID: 4354970619131624234}
   m_Layer: 5
   m_Name: Microphone Dropdown
-  m_TagString: Untagged
+  m_TagString: Microphone Dropdown
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4672,7 +4672,7 @@ GameObject:
   - component: {fileID: 3631237663764168957}
   m_Layer: 5
   m_Name: Language Options
-  m_TagString: Untagged
+  m_TagString: Language Options
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
