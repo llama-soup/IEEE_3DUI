@@ -14,6 +14,7 @@ public class ChatBox : MonoBehaviour
     public string[] languages;
     void Start()
     {
+        messages = new List<string>();
         languages = new string[3];
         messages.Add("This is the Chatbox. Player messages will appear here.");
         UpdateText();
