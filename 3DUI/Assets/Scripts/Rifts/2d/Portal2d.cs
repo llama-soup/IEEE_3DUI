@@ -17,8 +17,8 @@ public class Portal2d : MonoBehaviour
     // Standard IPD (Interpupillary Distance)
     private readonly Vector3 leftEyeOffset = new Vector3(0.032f, 0, 0);
     private readonly Vector3 rightEyeOffset = new Vector3(-0.032f, 0, 0);
-    private float lastTeleportTime;
-    private const float TELEPORT_COOLDOWN = 0.1f;
+    private static float lastTeleportTime;
+    private const float TELEPORT_COOLDOWN = 0.5f;
 
     void Start()
     {
@@ -127,6 +127,7 @@ public class Portal2d : MonoBehaviour
         if (other.CompareTag("Interactable"))
         {
             // Check cooldown
+            Debug.Log($"Difference in time: {Time.time - lastTeleportTime}");
             if (Time.time - lastTeleportTime < TELEPORT_COOLDOWN)
                 return;
 
@@ -134,49 +135,46 @@ public class Portal2d : MonoBehaviour
             Vector3 portalToObject = other.transform.position - transform.position;
             float dotProduct = Vector3.Dot(transform.forward, portalToObject);
 
-            // Only teleport if object is entering from the front
-            if (dotProduct < 0f)
+            Debug.Log("Teleported Object");
+            // Calculate position relative to this portal
+            Vector3 objectOffsetFromPortal = transform.InverseTransformPoint(other.transform.position);
+            
+            // Flip the x and z coordinates for proper exit orientation
+            objectOffsetFromPortal = new Vector3(-objectOffsetFromPortal.x, 
+                                            objectOffsetFromPortal.y, 
+                                            -objectOffsetFromPortal.z);
+            
+            // Calculate the new position relative to other portal
+            Vector3 newPosition = otherPortal.transform.TransformPoint(objectOffsetFromPortal);
+            
+            // Add a small offset in the direction of the portal's forward to prevent immediate re-entry
+            newPosition += otherPortal.transform.forward * 0.1f;
+            
+            // Calculate rotation
+            Quaternion relativeRot = Quaternion.Inverse(transform.rotation) * other.transform.rotation;
+            Quaternion newRotation = otherPortal.transform.rotation * Quaternion.Euler(0, 180, 0) * relativeRot;
+            
+            // If object has rigidbody, preserve velocity through portal
+            Rigidbody rb = other.GetComponent<Rigidbody>();
+            if (rb != null)
             {
-                // Calculate position relative to this portal
-                Vector3 objectOffsetFromPortal = transform.InverseTransformPoint(other.transform.position);
+                Vector3 relativeVelocity = transform.InverseTransformDirection(rb.velocity);
+                relativeVelocity = new Vector3(-relativeVelocity.x, relativeVelocity.y, -relativeVelocity.z);
+                Vector3 newVelocity = otherPortal.transform.TransformDirection(relativeVelocity);
                 
-                // Flip the x and z coordinates for proper exit orientation
-                objectOffsetFromPortal = new Vector3(-objectOffsetFromPortal.x, 
-                                                objectOffsetFromPortal.y, 
-                                                -objectOffsetFromPortal.z);
-                
-                // Calculate the new position relative to other portal
-                Vector3 newPosition = otherPortal.transform.TransformPoint(objectOffsetFromPortal);
-                
-                // Add a small offset in the direction of the portal's forward to prevent immediate re-entry
-                newPosition += otherPortal.transform.forward * 0.1f;
-                
-                // Calculate rotation
-                Quaternion relativeRot = Quaternion.Inverse(transform.rotation) * other.transform.rotation;
-                Quaternion newRotation = otherPortal.transform.rotation * Quaternion.Euler(0, 180, 0) * relativeRot;
-                
-                // If object has rigidbody, preserve velocity through portal
-                Rigidbody rb = other.GetComponent<Rigidbody>();
-                if (rb != null)
-                {
-                    Vector3 relativeVelocity = transform.InverseTransformDirection(rb.velocity);
-                    relativeVelocity = new Vector3(-relativeVelocity.x, relativeVelocity.y, -relativeVelocity.z);
-                    Vector3 newVelocity = otherPortal.transform.TransformDirection(relativeVelocity);
-                    
-                    // Teleport and set new velocity
-                    rb.position = newPosition;
-                    rb.rotation = newRotation;
-                    rb.velocity = newVelocity;
-                }
-                else
-                {
-                    // Teleport non-rigidbody object
-                    other.transform.SetPositionAndRotation(newPosition, newRotation);
-                }
-
-                // Update last teleport time
-                lastTeleportTime = Time.time;
+                // Teleport and set new velocity
+                rb.position = newPosition;
+                rb.rotation = newRotation;
+                rb.velocity = newVelocity;
             }
+            else
+            {
+                // Teleport non-rigidbody object
+                other.transform.SetPositionAndRotation(newPosition, newRotation);
+            }
+
+            // Update last teleport time
+            lastTeleportTime = Time.time;
         }
     }
 }

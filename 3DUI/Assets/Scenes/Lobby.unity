@@ -3092,6 +3092,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: XR Origin (VR)
       objectReference: {fileID: 0}
+    - target: {fileID: 7049874888611816780, guid: 7e6201ce177680149886a4c2450d9613, type: 3}
+      propertyPath: m_MoveSpeed
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -4237,6 +4241,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1477720036494100412, guid: a36adc6a7e59d9842a09855211e4f318, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 3093662440
+      objectReference: {fileID: 0}
     - target: {fileID: 3955046066398407440, guid: a36adc6a7e59d9842a09855211e4f318, type: 3}
       propertyPath: m_LocalPosition.x
       value: -8.089
@@ -4280,10 +4288,6 @@ PrefabInstance:
     - target: {fileID: 4929179014939821974, guid: a36adc6a7e59d9842a09855211e4f318, type: 3}
       propertyPath: m_Name
       value: Grabbable
-      objectReference: {fileID: 0}
-    - target: {fileID: 7397690772832913236, guid: a36adc6a7e59d9842a09855211e4f318, type: 3}
-      propertyPath: GlobalObjectIdHash
-      value: 3378521478
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

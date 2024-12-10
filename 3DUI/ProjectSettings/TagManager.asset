@@ -8,6 +8,9 @@ TagManager:
   - Right Hand
   - Interactable
   - Keycard
+  - Language Options
+  - Microphone Dropdown
+  - Chat
   layers:
   - Default
   - TransparentFX
