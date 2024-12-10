@@ -17,6 +17,8 @@ public class Portal2d : MonoBehaviour
     // Standard IPD (Interpupillary Distance)
     private readonly Vector3 leftEyeOffset = new Vector3(0.032f, 0, 0);
     private readonly Vector3 rightEyeOffset = new Vector3(-0.032f, 0, 0);
+    private float lastTeleportTime;
+    private const float TELEPORT_COOLDOWN = 0.1f;
 
     void Start()
     {
@@ -124,6 +126,10 @@ public class Portal2d : MonoBehaviour
     {
         if (other.CompareTag("Interactable"))
         {
+            // Check cooldown
+            if (Time.time - lastTeleportTime < TELEPORT_COOLDOWN)
+                return;
+
             // Get the direction from portal to object
             Vector3 portalToObject = other.transform.position - transform.position;
             float dotProduct = Vector3.Dot(transform.forward, portalToObject);
@@ -141,6 +147,9 @@ public class Portal2d : MonoBehaviour
                 
                 // Calculate the new position relative to other portal
                 Vector3 newPosition = otherPortal.transform.TransformPoint(objectOffsetFromPortal);
+                
+                // Add a small offset in the direction of the portal's forward to prevent immediate re-entry
+                newPosition += otherPortal.transform.forward * 0.1f;
                 
                 // Calculate rotation
                 Quaternion relativeRot = Quaternion.Inverse(transform.rotation) * other.transform.rotation;
@@ -164,6 +173,9 @@ public class Portal2d : MonoBehaviour
                     // Teleport non-rigidbody object
                     other.transform.SetPositionAndRotation(newPosition, newRotation);
                 }
+
+                // Update last teleport time
+                lastTeleportTime = Time.time;
             }
         }
     }
