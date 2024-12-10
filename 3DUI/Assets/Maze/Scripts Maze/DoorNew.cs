@@ -18,17 +18,9 @@ public class DoorNew : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Controller")) // Ensure the controller has the "Controller" tag
-        {
             Debug.Log("Controller entered the door trigger!");
             ToggleDoor();
-        }
 
-        if(other.CompareTag("PickUp"))
-        {
-            Debug.Log("News story picked up");
-            other.gameObject.SetActive(false);
-        }
     }
 
     public void ToggleDoor()
