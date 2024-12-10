@@ -7,6 +7,9 @@ using UnityEngine.UI;
 using OpenAI;
 using System.Collections.Generic;
 using Samples.Whisper;
+using UnityEngine.SceneManagement;
+using UnityEngine.XR.Hands.OpenXR;
+using Unity.VisualScripting;
 
 public class NetworkPlayer : NetworkBehaviour
 {
@@ -64,38 +67,37 @@ public class NetworkPlayer : NetworkBehaviour
             }
 
 
-            futurePlayerSpawnPoint = GameObject.Find("Future Player Spawn Point");
-            presentPlayerSpawnPoint = GameObject.Find("Present Player Spawn Point");
-
-            if (futurePlayerSpawnPoint == null)
-                {
-                    Debug.LogError("Future Player Spawn Point not found!");
-                }
-
-
-            if (presentPlayerSpawnPoint == null)
-                {
-                    Debug.LogError("Present Player Spawn Point not found!");
-                }
-            Debug.Log("Future Player Spawn Point: " + futurePlayerSpawnPoint.transform);
-            Debug.Log("Present Player Spawn Point: " + presentPlayerSpawnPoint.transform);
-            Transform spawnPoint = IsServer ? futurePlayerSpawnPoint.transform : presentPlayerSpawnPoint.transform;
-            Transform playerTransform = this.transform;
-
-            playerTransform.position = spawnPoint.position;
-            playerTransform.rotation = spawnPoint.rotation;
-
             if (!IsServer){
-                UpdateClientEnvironment();
                 player_ID = NetworkManager.Singleton.ConnectedClients.Count;
                 CreateMessageBox();
             }
         }
 
+        SceneManager.sceneLoaded += OnSceneLoaded;
+
         //Boolean that stops the audio recording.
         stop = false;
 
     }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+            futurePlayerSpawnPoint = GameObject.Find("Future Player Spawn Point");
+            presentPlayerSpawnPoint = GameObject.Find("Present Player Spawn Point");
+
+            Debug.Log("Future Player Spawn Point: " + futurePlayerSpawnPoint.transform);
+            Debug.Log("Present Player Spawn Point: " + presentPlayerSpawnPoint.transform);
+            Transform spawnPoint = IsServer ? presentPlayerSpawnPoint.transform : futurePlayerSpawnPoint.transform;
+            Transform playerTransform = this.transform;
+
+            playerTransform.position = spawnPoint.position;
+            playerTransform.rotation = spawnPoint.rotation;
+
+            if(!IsServer){
+                UpdateClientEnvironment();
+            }
+    }
+
     //Creates the message dissplay for the player
     void CreateMessageBox(){
         // Create a new GameObject for the text
