@@ -83,21 +83,15 @@ public class NetworkPlayer : NetworkBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-            futurePlayerSpawnPoint = GameObject.Find("Future Player Spawn Point");
-            presentPlayerSpawnPoint = GameObject.Find("Present Player Spawn Point");
 
-            Debug.Log("Future Player Spawn Point: " + futurePlayerSpawnPoint.transform);
-            Debug.Log("Present Player Spawn Point: " + presentPlayerSpawnPoint.transform);
-            Transform spawnPoint = IsServer ? presentPlayerSpawnPoint.transform : futurePlayerSpawnPoint.transform;
-            Transform playerTransform = this.transform;
-
-            playerTransform.position = spawnPoint.position;
-            playerTransform.rotation = spawnPoint.rotation;
 
             if(!IsServer){
+                SetClientPos();
                 UpdateClientEnvironment();
             }
     }
+
+
 
     //Creates the message dissplay for the player
     
@@ -225,10 +219,20 @@ public class NetworkPlayer : NetworkBehaviour
     }
 
 
-    void SetClientPos(GameObject playerToMove){
-        if(futurePlayerSpawnPoint != null){
-            playerToMove.transform.position = futurePlayerSpawnPoint.transform.position;
-        }
+    void SetClientPos(){
+            futurePlayerSpawnPoint = GameObject.Find("Future Player Spawn Point");
+            presentPlayerSpawnPoint = GameObject.Find("Present Player Spawn Point");
+
+            Debug.Log("Future Player Spawn Point: " + futurePlayerSpawnPoint.transform);
+            Debug.Log("Present Player Spawn Point: " + presentPlayerSpawnPoint.transform);
+            Transform spawnPoint = IsServer ? presentPlayerSpawnPoint.transform : futurePlayerSpawnPoint.transform;
+            Transform playerTransform = this.transform;
+
+            playerTransform.position = spawnPoint.position;
+            playerTransform.rotation = spawnPoint.rotation;
+
+
+
 
     }
 
