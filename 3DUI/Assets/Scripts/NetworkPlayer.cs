@@ -33,26 +33,24 @@ public class NetworkPlayer : NetworkBehaviour
     //Traslate variables
     private GameObject languageSetting;
     private GameObject microphones;
-    public String language;
-    public String microphone;
+    private String language;
+    private String otherLanuage;
+    private String microphone;
     public int player_ID;
     private string messageTemp;
     private List<ChatMessage> messages = new List<ChatMessage>();
     private string prompt = "Act as a translator for the user. Your response should only include the translation requested. Don't break character. Don't ever mention that you are an AI model.";
-    
     private readonly string fileName = "output.wav";
     private readonly int duration = 10;
-    
     private AudioClip clip;
     private bool isRecording;
-
     public XROrigin xrOrigin;
     private bool stop;
     private float time;
     private OpenAIApi openai = new OpenAIApi();
     private GameObject mainText;
     private ChatBox mainChatScript;
-    public GameObject canvasPrefab; // Assign this in the Inspector
+    public GameObject canvasPrefab;
     private GameObject playerCanvas;
     private TMP_Text playerChat;
     //end of translate variables
@@ -79,9 +77,6 @@ public class NetworkPlayer : NetworkBehaviour
             language = "english";
             //Boolean that stops the audio recording.
             stop = false;
-            playerCanvas = Instantiate(canvasPrefab, transform);
-            playerCanvas.transform.localPosition = new Vector3(0, 1.5f, 2.0f); // Adjust position relative to the player
-            playerChat = playerCanvas.GetComponentInChildren<TMP_Text>();
         }
 
         SceneManager.sceneLoaded += OnSceneLoaded;
@@ -104,10 +99,11 @@ public class NetworkPlayer : NetworkBehaviour
 
     private void IntializeMainText(){
         mainText = GameObject.FindWithTag("Chat");
-        Debug.Log(mainText);
         mainChatScript = mainText.GetComponent<ChatBox>();
-        Debug.Log(mainChatScript);
         mainChatScript.Updatelanguage(player_ID, language);
+        playerCanvas = Instantiate(canvasPrefab, transform);
+        playerCanvas.transform.localPosition = new Vector3(0, 1.5f, 2.0f); // Adjust position relative to the player
+        playerChat = playerCanvas.GetComponentInChildren<TMP_Text>();
     }
 
     //Creates the message dissplay for the player
@@ -173,16 +169,16 @@ public class NetworkPlayer : NetworkBehaviour
         if (messages.Count == 0) 
         {
             if(player_ID == 0){
-                language = mainChatScript.languages[1];
+                otherLanuage = mainChatScript.languages[1];
             }
             else if(player_ID == 1){
-                language = mainChatScript.languages[0];
+                otherLanuage = mainChatScript.languages[0];
             }
-            if(language == "Select a Language" || language == null){
-                language = "English";
+            if(otherLanuage == "Select a Language" || otherLanuage == null){
+                otherLanuage = "English";
             }
-            Debug.Log(language);
-            newMessage.Content = prompt + " Translate the message from English to " + language + ".\n" + messageTemp;
+            Debug.Log(otherLanuage);
+            newMessage.Content = prompt + " Translate the message from English to " + otherLanuage + ".\n" + messageTemp;
         }
         
         messages.Add(newMessage);
