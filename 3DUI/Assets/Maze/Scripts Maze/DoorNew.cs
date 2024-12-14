@@ -1,3 +1,5 @@
+
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,6 +8,7 @@ public class DoorNew : MonoBehaviour
 {
     private Renderer _renderer;
     private bool open = false;
+    private NetworkPlayer networkPlayer;
 
     void Start()
     {
@@ -19,8 +22,12 @@ public class DoorNew : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
             Debug.Log("Controller entered the door trigger!");
+            GameObject collidedInto = this.gameObject;
+            if(collidedInto.CompareTag("EnterMaze"))
+            {
+                networkPlayer.initializeMazeText();
+            }
             ToggleDoor();
-
     }
 
     public void ToggleDoor()
