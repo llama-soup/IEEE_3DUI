@@ -54,6 +54,10 @@ public class NetworkPlayer : NetworkBehaviour
     private GameObject playerCanvas;
     private TMP_Text playerChat;
     //end of translate variables
+    public GameObject mazeTextPrefab;
+    private GameObject mazeTextPriv;
+    private TMP_Text mazeText;
+    //end of maze text vars
     private NetworkVariable<Vector3> netRootPosition = new NetworkVariable<Vector3>();
     private NetworkVariable<Quaternion> netRootRotation = new NetworkVariable<Quaternion>();
     private NetworkVariable<Vector3> netHeadLocalPosition = new NetworkVariable<Vector3>();
@@ -101,6 +105,7 @@ public class NetworkPlayer : NetworkBehaviour
         mainText = GameObject.FindWithTag("Chat");
         mainChatScript = mainText.GetComponent<ChatBox>();
         mainChatScript.Updatelanguage(player_ID, language);
+
         playerCanvas = Instantiate(canvasPrefab, transform);
         playerCanvas.transform.localPosition = new Vector3(0, 1.5f, 2.0f); // Adjust position relative to the player
         playerChat = playerCanvas.GetComponentInChildren<TMP_Text>();
@@ -229,6 +234,7 @@ public class NetworkPlayer : NetworkBehaviour
         SendReply();
     }
 
+
     void UpdateClientEnvironment(){
         // Set HDR to not cloudy day if we are the client (aka not the server, player 1)(aka player 2)
         Debug.Log("Client environment updated!");
@@ -321,6 +327,7 @@ void UpdatePlayerPositionClientRpc(Vector3 position, Quaternion rotation)
                 EndRecording();
             }
         }
+
     }
 
     void UpdateLocalTransforms()
@@ -364,5 +371,20 @@ void UpdatePlayerPositionClientRpc(Vector3 position, Quaternion rotation)
         netLeftHandLocalRotation.Value = leftHand.localRotation;
         netRightHandLocalPosition.Value = rightHand.localPosition;
         netRightHandLocalRotation.Value = rightHand.localRotation;
+    }
+
+    public void initializeMazeText()
+    {
+        mazeTextPriv = Instantiate(mazeTextPrefab,transform);
+        mazeTextPriv.transform.localPosition = new Vector3(0,1.5f,2.0f);
+        mazeText = mazeTextPrefab.GetComponentInChildren<TMP_Text>();
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.CompareTag("EnterMaze"))
+        {
+            initializeMazeText();
+        }
     }
 }

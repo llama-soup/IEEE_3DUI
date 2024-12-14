@@ -24,8 +24,10 @@ public class Rotator : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-            Debug.Log("Controller entered the door trigger!");
+            Debug.Log("Controller entered the pickup trigger!");
             this.gameObject.SetActive(false);
 
     }
+
+    
 }

@@ -1,3 +1,5 @@
+
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -20,7 +22,6 @@ public class DoorNew : MonoBehaviour
     {
             Debug.Log("Controller entered the door trigger!");
             ToggleDoor();
-
     }
 
     public void ToggleDoor()
