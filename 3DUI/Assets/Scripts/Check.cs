@@ -72,13 +72,15 @@ public class Check : MonoBehaviour
             presentWirePortal.gameObject.SetActive(true);
             futureWirePortal.gameObject.SetActive(true);
         }
-    }
 
     //Debugging code:
-    if(is270(rZero) && is180(rOne))
-    {
-        Debug.Log("squareZero and rOne");
+        if(is270(rZero) && is180(rOne))
+        {
+            Debug.Log("squareZero and rOne");
+        }
     }
+
+
 
     bool is270(float angle)
     {
