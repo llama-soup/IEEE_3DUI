@@ -17,6 +17,7 @@ public class LobbyManager : MonoBehaviour
     private string joinCode;
     private bool hasTransitioned = false;
     private bool isHosting = false;
+    [SerializeField] private GameObject mainChatPrefab;
 
     private async void Start()
     {
@@ -132,5 +133,6 @@ public class LobbyManager : MonoBehaviour
     {
         Debug.Log("Transitioning to the Main Scene...");
         NetworkManager.Singleton.SceneManager.LoadScene("MainScene", LoadSceneMode.Single);
+        Instantiate(mainChatPrefab);
     }
 }

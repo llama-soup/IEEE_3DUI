@@ -93,16 +93,10 @@ public class NetworkPlayer : NetworkBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-
-
-
-
         if(!IsServer){
             UpdateClientEnvironment();
             SetClientPos();
         }
-
-        IntializeMainText();
         //InitializeMazeText();
     }
 
