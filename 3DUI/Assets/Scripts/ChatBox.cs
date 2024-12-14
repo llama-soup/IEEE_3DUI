@@ -62,12 +62,14 @@ public class ChatBox : NetworkBehaviour
     void Update(){
         if(netMessage.Count > messages.Count){
             messages.Add(netMessage[netMessage.Count-1].Value);
+            UpdateText();
         }
         else{
             if(netMessage[0].Value != messages[0]){
                 for(int i = 0; i < netMessage.Count; i++){
                     messages[i] = netMessage[i].Value;
-                }                
+                }
+                UpdateText();                
             }
         }
         if(netLanguage[0].Value != languages[0] || netLanguage[1].Value != languages[1]){
