@@ -379,4 +379,12 @@ void UpdatePlayerPositionClientRpc(Vector3 position, Quaternion rotation)
         mazeTextPriv.transform.localPosition = new Vector3(0,1.5f,2.0f);
         mazeText = mazeTextPrefab.GetComponentInChildren<TMP_Text>();
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.CompareTag("EnterMaze"))
+        {
+            initializeMazeText();
+        }
+    }
 }
