@@ -45,7 +45,7 @@ public class DoorNew : MonoBehaviour
         Debug.Log("Controller entered the door trigger!");
 
         // Check if the colliding object has the correct tag and this door is tagged "EnterMaze"
-        if (other.CompareTag("PlayerTag") && this.gameObject.CompareTag("EnterMaze"))
+        if (other.CompareTag("PlayerTag"))
         {
             Debug.Log("Entered the maze");
 
