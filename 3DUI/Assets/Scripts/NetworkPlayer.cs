@@ -311,7 +311,7 @@ void UpdatePlayerPositionClientRpc(Vector3 position, Quaternion rotation)
             microphones = GameObject.FindWithTag("Microphone Dropdown");
             UpdateMicrophone();
         }
-        if(mainText == null && GameObject.FindWithTag("Chat") != null){
+        if((mainText == null || playerChat == null) && GameObject.FindWithTag("Chat") != null){
             IntializeMainText();
         }
         //Process for recording the messages
