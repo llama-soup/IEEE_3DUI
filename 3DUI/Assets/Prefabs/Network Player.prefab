@@ -47,7 +47,7 @@ GameObject:
   - component: {fileID: 4073195454512857822}
   m_Layer: 0
   m_Name: Network Player
-  m_TagString: Untagged
+  m_TagString: PlayerTag
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
