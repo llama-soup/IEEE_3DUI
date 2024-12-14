@@ -54,9 +54,13 @@ public class NetworkPlayer : NetworkBehaviour
     private GameObject playerCanvas;
     private TMP_Text playerChat;
     //end of translate variables
-    public GameObject mazeTextPrefab;
-    private GameObject mazeTextPriv;
-    private TMP_Text mazeText;
+    public GameObject mazeTextPrefab; // Prefab containing the text elements
+    private GameObject mazeTextPriv; // Instance of the prefab
+    private TMP_Text countText; // For CountText
+    private TMP_Text timerText; // For Timer
+    private TMP_Text environmentalFactsText; // For EnvironmentalFacts
+    private Button restartButton; // For Restart
+
     //end of maze text vars
     private NetworkVariable<Vector3> netRootPosition = new NetworkVariable<Vector3>();
     private NetworkVariable<Quaternion> netRootRotation = new NetworkVariable<Quaternion>();
@@ -373,18 +377,49 @@ void UpdatePlayerPositionClientRpc(Vector3 position, Quaternion rotation)
         netRightHandLocalRotation.Value = rightHand.localRotation;
     }
 
-    public void initializeMazeText()
+    public void InitializeMazeText()
     {
-        mazeTextPriv = Instantiate(mazeTextPrefab,transform);
-        mazeTextPriv.transform.localPosition = new Vector3(0,1.5f,2.0f);
-        mazeText = mazeTextPrefab.GetComponentInChildren<TMP_Text>();
+        // Instantiate the prefab
+        mazeTextPriv = Instantiate(mazeTextPrefab, transform);
+        mazeTextPriv.transform.localPosition = new Vector3(0, 1.5f, 2.0f);
+
+        // Get references to the UI components
+        countText = mazeTextPriv.transform.Find("CountText").GetComponent<TMP_Text>();
+        timerText = mazeTextPriv.transform.Find("Timer").GetComponent<TMP_Text>();
+        environmentalFactsText = mazeTextPriv.transform.Find("EnvironmentalFacts").GetComponent<TMP_Text>();
+        restartButton = mazeTextPriv.transform.Find("Restart").GetComponent<Button>();
+
+        // Assign a click listener to the Restart button
+        //restartButton.onClick.AddListener(OnRestartButtonClick);
+    }
+
+    private void OnRestartButtonClick()
+    {
+        Debug.Log("Restart button clicked");
+        // Add logic to reset the maze or restart the game
+        ResetMaze();
+    }
+
+    private void ResetMaze()
+    {
+        Debug.Log("Resetting maze...");
+        // Implement your maze reset logic here
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.CompareTag("EnterMaze"))
+        if (other.CompareTag("EnterMaze"))
         {
-            initializeMazeText();
+            Debug.Log("Entered the maze");
+
+            // Initialize the maze text elements
+            InitializeMazeText();
+
+            // Set initial text values
+            countText.text = "Count: 0";
+            timerText.text = "Time: 00:00";
+            environmentalFactsText.text = "TEST IF HERE";
         }
     }
+
 }
