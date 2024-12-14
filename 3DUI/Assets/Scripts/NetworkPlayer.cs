@@ -33,9 +33,9 @@ public class NetworkPlayer : NetworkBehaviour
     //Traslate variables
     private GameObject languageSetting;
     private GameObject microphones;
-    private String language;
-    private String otherLanuage;
-    private String microphone;
+    private string language;
+    private string otherLanuage;
+    private string microphone;
     public int player_ID;
     private string messageTemp;
     private List<ChatMessage> messages = new List<ChatMessage>();

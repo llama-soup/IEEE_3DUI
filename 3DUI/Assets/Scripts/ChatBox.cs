@@ -6,12 +6,14 @@ using Unity.Netcode;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class ChatBox : MonoBehaviour
+public class ChatBox : NetworkBehaviour
 {
     [SerializeField] private TMP_Text textbox;
     private List<string> messages;
     // Start is called before the first frame update
     public string[] languages;
+    private TMP_Text networkChat;
+    private string[] networkLanguages;
     void Start()
     {
         messages = new List<string>();
@@ -43,5 +45,21 @@ public class ChatBox : MonoBehaviour
     }
     public string getText(){
         return textbox.text;
+    }
+
+    private void Update()
+    {
+        if (IsServer)
+        {
+            // Update position on the server
+            networkLanguages = languages;
+            networkChat = textbox;
+        }
+        else
+        {
+            // Apply synced position on clients
+            languages = networkLanguages;
+            textbox = networkChat;
+        }
     }
 }

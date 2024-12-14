@@ -32941,6 +32941,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 601562268392911162, guid: 43d33d4e23f94554782dd9701f15c1f2, type: 3}
+      propertyPath: futureWirePortal
+      value: 
+      objectReference: {fileID: 716137964}
+    - target: {fileID: 601562268392911162, guid: 43d33d4e23f94554782dd9701f15c1f2, type: 3}
+      propertyPath: presentWirePortal
+      value: 
+      objectReference: {fileID: 1771799793}
     - target: {fileID: 6095463695663483903, guid: 43d33d4e23f94554782dd9701f15c1f2, type: 3}
       propertyPath: m_Name
       value: Wires (1)
