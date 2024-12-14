@@ -83,7 +83,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 2536501981
+  GlobalObjectIdHash: 2885760164
   InScenePlacedSourceGlobalObjectIdHash: 0
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
@@ -120,11 +120,10 @@ MonoBehaviour:
   - {fileID: 70776061832202166}
   - {fileID: 1790198260348848906}
   - {fileID: 7716034923268905295}
-  language: 
-  microphone: 
   player_ID: 0
   xrOrigin: {fileID: 0}
   canvasPrefab: {fileID: 1962908434356156160, guid: 703fbdd72228125429e375e77956e90b, type: 3}
+  mazeTextPrefab: {fileID: 8165548624530612265, guid: 3acc669ba4622e747a297ca85df2da50, type: 3}
 --- !u!114 &7825916495287122496
 MonoBehaviour:
   m_ObjectHideFlags: 0
