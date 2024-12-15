@@ -56,10 +56,10 @@ public class NetworkPlayer : NetworkBehaviour
     //end of translate variables
     public GameObject mazeTextPrefab; // Prefab containing the text elements
     private GameObject mazeTextPriv; // Instance of the prefab
-    private TMP_Text countText; // For CountText
-    private TMP_Text timerText; // For Timer
-    private TMP_Text environmentalFactsText; // For EnvironmentalFacts
-    private Button restartButton; // For Restart
+    public TMP_Text countText; // For CountText
+    public TMP_Text timerText; // For Timer
+    public TMP_Text environmentalFactsText; // For EnvironmentalFacts
+    public Button restartButton; // For Restart
 
     //end of maze text vars
     private NetworkVariable<Vector3> netRootPosition = new NetworkVariable<Vector3>();
@@ -93,16 +93,11 @@ public class NetworkPlayer : NetworkBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-
-
-
-
         if(!IsServer){
             UpdateClientEnvironment();
             SetClientPos();
         }
-
-        IntializeMainText();
+        //InitializeMazeText();
     }
 
     private void IntializeMainText(){
