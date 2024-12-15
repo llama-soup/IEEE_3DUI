@@ -64,7 +64,7 @@ public class Check : MonoBehaviour
 
         if(is270(rZero) && is180(rOne) && is90(rTwo) && is180(rThree) && (is270(rFour) || is90(rFour))
             && is0(rFive) && is270(rSix) && (is0(rSeven) || is180(rSeven)) && is270(rEight)
-            && is0(rNine) && is90(rTen) && is90(rEleven) && is90(rTwelve) && change)
+            && is0(rNine) && is90(rTen) && is90(rEleven) && is90(rTwelve))
         {
             Debug.Log("Completed puzzle");
             // instructions.transform.Translate(0,0,0.1499986f * 0.05f);
