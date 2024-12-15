@@ -42,6 +42,7 @@ public class Check : MonoBehaviour
         squareTwelve = GameObject.Find("Cube (12)");
         instructions = GameObject.Find("Instructions");
         complete = GameObject.Find("Complete");
+        complete.SetActive(false);
     }
 
     // Update is called once per frame
@@ -66,22 +67,23 @@ public class Check : MonoBehaviour
             && is0(rNine) && is90(rTen) && is90(rEleven) && is90(rTwelve) && change)
         {
             Debug.Log("Completed puzzle");
-            instructions.transform.Translate(0,0,0.1499986f * 0.05f);
-            complete.transform.Translate(0,0,-0.1499986f * 0.05f);
-            change = false; 
+            // instructions.transform.Translate(0,0,0.1499986f * 0.05f);
+            // complete.transform.Translate(0,0,-0.1499986f * 0.05f);
+            complete.SetActive(true);
+            instructions.SetActive(false);
+            change = false;
             presentWirePortal.gameObject.SetActive(true);
             futureWirePortal.gameObject.SetActive(true);
         }
 
-    //Debugging code:
+        //Debugging code:
         if(is270(rZero) && is180(rOne))
         {
             Debug.Log("squareZero and rOne");
         }
     }
 
-
-
+    // Helper functions for calculating angle
     bool is270(float angle)
     {
         if ((angle - 270) % 360 == 0)

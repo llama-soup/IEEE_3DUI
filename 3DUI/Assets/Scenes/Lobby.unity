@@ -720,6 +720,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98cae0051bf75aa4e8497cc0a6399c27, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mainChatPrefab: {fileID: 8459883947640897818, guid: 4df27e2c86521cc44ab275cdb4cbece6, type: 3}
 --- !u!1 &203638169
 GameObject:
   m_ObjectHideFlags: 0

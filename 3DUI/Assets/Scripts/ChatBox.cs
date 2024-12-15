@@ -10,16 +10,17 @@ public class ChatBox : NetworkBehaviour
 {
     [SerializeField] private TMP_Text textbox;
     private List<string> messages;
-    // Start is called before the first frame update
     public string[] languages;
-    private TMP_Text networkChat;
-    private string[] networkLanguages;
+    private List<NetworkVariable<string>> netMessage = new List<NetworkVariable<string>>();
+    private NetworkVariable<string>[] netLanguage = new NetworkVariable<string>[2];
     void Start()
     {
         messages = new List<string>();
         languages = new string[2];
         messages.Add("This is the Chatbox. Player messages will appear here.");
         UpdateText();
+        ChangeNetLanguage();
+        ChangeNetMessage();
     }
 
     private void UpdateText(){
@@ -37,29 +38,44 @@ public class ChatBox : NetworkBehaviour
         string num = playerID.ToString();
         message = "player" +  num + ": " + message;
         messages.Add(message);
+        ChangeNetMessage();
         UpdateText();
     }
 
     public void Updatelanguage(int playerID, string language){
         languages[playerID] = language;
+        ChangeNetLanguage();
     }
     public string getText(){
         return textbox.text;
     }
-
-    private void Update()
-    {
-        if (IsServer)
-        {
-            // Update position on the server
-            networkLanguages = languages;
-            networkChat = textbox;
+    private void ChangeNetMessage(){
+        for(int i = 0; i < messages.Count; i++){
+            netMessage[i].Value = messages[i];
         }
-        else
-        {
-            // Apply synced position on clients
-            languages = networkLanguages;
-            textbox = networkChat;
+    }
+    private void ChangeNetLanguage(){
+        for(int i = 0; i < languages.Length; i++){
+            netLanguage[i].Value = languages[i];
+        }
+    }
+    void Update(){
+        if(netMessage.Count > messages.Count){
+            messages.Add(netMessage[netMessage.Count-1].Value);
+            UpdateText();
+        }
+        else{
+            if(netMessage[0].Value != messages[0]){
+                for(int i = 0; i < netMessage.Count; i++){
+                    messages[i] = netMessage[i].Value;
+                }
+                UpdateText();                
+            }
+        }
+        if(netLanguage[0].Value != languages[0] || netLanguage[1].Value != languages[1]){
+            for(int i = 0; i < netLanguage.Length; i++){
+                languages[i] = netLanguage[i].Value;
+            }
         }
     }
 }
