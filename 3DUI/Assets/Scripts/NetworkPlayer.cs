@@ -403,6 +403,7 @@ void UpdatePlayerPositionClientRpc(Vector3 position, Quaternion rotation)
 
     private void OnTriggerEnter(Collider other)
     {
+        Debug.Log("On trigger enter actually works");
         if (other.CompareTag("EnterMaze"))
         {
             Debug.Log("Entered the maze");
