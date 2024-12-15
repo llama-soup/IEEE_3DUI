@@ -31,6 +31,7 @@ public class NetworkPlayer : NetworkBehaviour
 
     public Renderer[] meshToDisable;
     //Traslate variables
+    [SerializeField] private GameObject mainChatPrefab;
     private GameObject languageSetting;
     private GameObject microphones;
     private string language;
@@ -241,6 +242,7 @@ public class NetworkPlayer : NetworkBehaviour
         RenderSettings.fogDensity = futureFogDensity;
         RenderSettings.skybox = futureSkybox;
         DynamicGI.UpdateEnvironment();
+        Instantiate(mainChatPrefab);
     }
 
 
