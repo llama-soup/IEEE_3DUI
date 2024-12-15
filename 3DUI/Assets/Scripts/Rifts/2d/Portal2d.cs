@@ -39,8 +39,8 @@ public class Portal2d : MonoBehaviour
         rightEyeCamera.transform.localRotation = Quaternion.Euler(0, 8f, 0);
         
         // Create and setup render textures
-        leftRenderTexture = new RenderTexture(Screen.width, Screen.height * 2, 24, RenderTextureFormat.DefaultHDR);
-        rightRenderTexture = new RenderTexture(Screen.width, Screen.height * 2, 24, RenderTextureFormat.DefaultHDR);
+        leftRenderTexture = new RenderTexture(Screen.width * 2, Screen.height * 4, 24, RenderTextureFormat.DefaultHDR);
+        rightRenderTexture = new RenderTexture(Screen.width * 2, Screen.height * 4, 24, RenderTextureFormat.DefaultHDR);
         
         leftEyeCamera.targetTexture = leftRenderTexture;
         rightEyeCamera.targetTexture = rightRenderTexture;

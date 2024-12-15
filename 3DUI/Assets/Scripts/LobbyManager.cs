@@ -133,6 +133,7 @@ public class LobbyManager : MonoBehaviour
     {
         Debug.Log("Transitioning to the Main Scene...");
         NetworkManager.Singleton.SceneManager.LoadScene("MainScene", LoadSceneMode.Single);
+        Debug.Log("Runs after scene is loaded");
         Instantiate(mainChatPrefab);
     }
 }
