@@ -42,6 +42,7 @@ public class Check : MonoBehaviour
         squareTwelve = GameObject.Find("Cube (12)");
         instructions = GameObject.Find("Instructions");
         complete = GameObject.Find("Complete");
+        instructions.SetActive(true);
         complete.SetActive(false);
     }
 
