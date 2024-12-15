@@ -54,12 +54,12 @@ public class DoorNew : MonoBehaviour
     }
 
     void OnCollisionEnter(Collision collision)
-{
-    if (collision.gameObject.CompareTag("EnterMaze"))
     {
-        Debug.Log("testing this");
+        if (collision.gameObject.CompareTag("EnterMaze"))
+        {
+            Debug.Log("testing this");
+        }
     }
-}
 
 
     public void ToggleDoor()
