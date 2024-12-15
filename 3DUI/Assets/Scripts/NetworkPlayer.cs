@@ -94,9 +94,6 @@ public class NetworkPlayer : NetworkBehaviour
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
 
-
-
-
         if(!IsServer){
             UpdateClientEnvironment();
             SetClientPos();
@@ -388,7 +385,7 @@ void UpdatePlayerPositionClientRpc(Vector3 position, Quaternion rotation)
         countText = mazeTextPriv.transform.Find("CountText").GetComponent<TMP_Text>();
         timerText = mazeTextPriv.transform.Find("Timer").GetComponent<TMP_Text>();
         environmentalFactsText = mazeTextPriv.transform.Find("EnvironmentalFacts").GetComponent<TMP_Text>();
-        restartButton = mazeTextPriv.transform.Find("Restart").GetComponent<Button>();
+        //restartButton = mazeTextPriv.transform.Find("Restart").GetComponent<Button>();
 
         // Assign a click listener to the Restart button
         //restartButton.onClick.AddListener(OnRestartButtonClick);

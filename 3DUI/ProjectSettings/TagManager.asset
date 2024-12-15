@@ -14,8 +14,8 @@ TagManager:
   - DoorTrigger
   - PickUp
   - Controller
-  - MazeExists
   - EnterMaze
+  - PlayerTag
   layers:
   - Default
   - TransparentFX
