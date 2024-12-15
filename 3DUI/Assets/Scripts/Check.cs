@@ -21,7 +21,7 @@ public class Check : MonoBehaviour
     GameObject complete;
     public GameObject presentWirePortal;
     public GameObject futureWirePortal;
-    bool change = true;
+    // bool change = true;
     // int index = 0;
     
     // Start is called before the first frame update
@@ -71,7 +71,7 @@ public class Check : MonoBehaviour
             // complete.transform.Translate(0,0,-0.1499986f * 0.05f);
             complete.SetActive(true);
             instructions.SetActive(false);
-            change = false;
+            // change = false;
             presentWirePortal.gameObject.SetActive(true);
             futureWirePortal.gameObject.SetActive(true);
         }
