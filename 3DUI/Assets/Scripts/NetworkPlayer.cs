@@ -383,23 +383,7 @@ void UpdatePlayerPositionClientRpc(Vector3 position, Quaternion rotation)
         countText = mazeTextPriv.transform.Find("CountText").GetComponent<TMP_Text>();
         timerText = mazeTextPriv.transform.Find("Timer").GetComponent<TMP_Text>();
         environmentalFactsText = mazeTextPriv.transform.Find("EnvironmentalFacts").GetComponent<TMP_Text>();
-        //restartButton = mazeTextPriv.transform.Find("Restart").GetComponent<Button>();
-
-        // Assign a click listener to the Restart button
-        //restartButton.onClick.AddListener(OnRestartButtonClick);
-    }
-
-    private void OnRestartButtonClick()
-    {
-        Debug.Log("Restart button clicked");
-        // Add logic to reset the maze or restart the game
-        ResetMaze();
-    }
-
-    private void ResetMaze()
-    {
-        Debug.Log("Resetting maze...");
-        // Implement your maze reset logic here
+        
     }
 
     private void OnTriggerEnter(Collider other)
