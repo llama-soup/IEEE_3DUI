@@ -45,6 +45,7 @@ GameObject:
   - component: {fileID: 7825916495287122496}
   - component: {fileID: -6206298534424060486}
   - component: {fileID: 4073195454512857822}
+  - component: {fileID: 862914431614327127}
   m_Layer: 0
   m_Name: Network Player
   m_TagString: PlayerTag
@@ -83,7 +84,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 2536501981
+  GlobalObjectIdHash: 2885760164
   InScenePlacedSourceGlobalObjectIdHash: 0
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
@@ -120,7 +121,6 @@ MonoBehaviour:
   - {fileID: 70776061832202166}
   - {fileID: 1790198260348848906}
   - {fileID: 7716034923268905295}
-  mainChatPrefab: {fileID: 8459883947640897818, guid: 4df27e2c86521cc44ab275cdb4cbece6, type: 3}
   player_ID: 0
   xrOrigin: {fileID: 0}
   canvasPrefab: {fileID: 1962908434356156160, guid: 703fbdd72228125429e375e77956e90b, type: 3}
@@ -129,6 +129,19 @@ MonoBehaviour:
   timerText: {fileID: 0}
   environmentalFactsText: {fileID: 0}
   restartButton: {fileID: 0}
+  remainingTime: 120
+  EnvironmentalFacts:
+  - Recycling one ton of paper saves 17 trees.
+  - Plastic takes up to 1000 years to decompose.
+  - "Oceans produce at least 50% of the Earth\u2019s oxygen."
+  - Deforestation contributes about 12% to 20% of global greenhouse gas emissions.
+  - Around 1 million species are at risk of extinction due to climate change.
+  - Another fact here
+  - Yet Another
+  - Anotha one
+  - Yes
+  - Climate Change is bad
+  - Another
 --- !u!114 &7825916495287122496
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -218,6 +231,27 @@ MonoBehaviour:
   m_DefaultActionMap: Translate
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!65 &862914431614327127
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3730834483268116179}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &3738887578881094086
 GameObject:
   m_ObjectHideFlags: 0

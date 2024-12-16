@@ -61,6 +61,22 @@ public class NetworkPlayer : NetworkBehaviour
     public TMP_Text environmentalFactsText; // For EnvironmentalFacts
     public Button restartButton; // For Restart
 
+    private int newspaperCount;
+    private bool timerStopped = true;
+    [SerializeField] float remainingTime = 120;
+    public string[] EnvironmentalFacts = {
+        "Recycling one ton of paper saves 17 trees.",
+        "Plastic takes up to 1000 years to decompose.",
+        "Oceans produce at least 50% of the Earth’s oxygen.",
+        "Deforestation contributes about 12% to 20% of global greenhouse gas emissions.",
+        "Around 1 million species are at risk of extinction due to climate change.",
+        "Another fact here",
+        "Yet Another",
+        "Anotha one",
+        "Yes",
+        "Climate Change is bad",
+        "Another"
+    };
     //end of maze text vars
     private NetworkVariable<Vector3> netRootPosition = new NetworkVariable<Vector3>();
     private NetworkVariable<Quaternion> netRootRotation = new NetworkVariable<Quaternion>();
@@ -328,6 +344,23 @@ void UpdatePlayerPositionClientRpc(Vector3 position, Quaternion rotation)
             }
         }
 
+        if(!timerStopped)
+        {
+                if(remainingTime > 0)
+            {
+                remainingTime -= Time.deltaTime;
+            }
+            else if(remainingTime<0)
+            {
+                remainingTime = 0;
+                environmentalFactsText.text = "You failed! Click to restart";
+                timerStopped = true;
+            }
+            int minutes = Mathf.FloorToInt(remainingTime/60);
+            int seconds = Mathf.FloorToInt(remainingTime%60);
+            countText.text = string.Format("{0:00}:{1:00}",minutes,seconds); 
+        }
+
     }
 
     void UpdateLocalTransforms()
@@ -394,8 +427,19 @@ void UpdatePlayerPositionClientRpc(Vector3 position, Quaternion rotation)
         countText.alpha = 1f;
         timerText.alpha = 1f;
         environmentalFactsText.alpha = 1f;
+
+        timerStopped = false; // Start the timer
     }
 
+     void SetCountText() 
+    {
+        countText.text =  "Newspaper Count: " + newspaperCount.ToString() + "/11";
+    }
+
+    void setEnvironmentalFact()
+    {
+        environmentalFactsText.text = EnvironmentalFacts[newspaperCount-1];
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -404,14 +448,28 @@ void UpdatePlayerPositionClientRpc(Vector3 position, Quaternion rotation)
         {
             Debug.Log("Entered the maze");
 
-            // Initialize the maze text elements
-            InitializeMazeText();
+            ShowMazeText();
+        }
 
-            // Set initial text values
-            countText.text = "Count: 0";
-            timerText.text = "Time: 00:00";
-            environmentalFactsText.text = "TEST IF HERE";
+        if (other.CompareTag("PickUp"))
+        {
+            other.gameObject.SetActive(false);
+            newspaperCount = newspaperCount + 1;
+            SetCountText();
+            setEnvironmentalFact();
+
+            if (newspaperCount == 11)
+            {
+                timerStopped = true; // Stop the timer
+                //StartCoroutine(ShowCongratsMessageWithDelay());
+            }
         }
     }
+
+//     private IEnumerator ShowCongratsMessageWithDelay()
+//    {
+//       yield return new WaitForSeconds(5); // Wait for 5 seconds
+//       envFacts.text = "Congratulations! You've collected all the environmental stories!";
+//    }
 
 }
