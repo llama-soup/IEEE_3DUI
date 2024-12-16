@@ -17,49 +17,59 @@ public class DoorNew : MonoBehaviour
         {
             Debug.LogError("Renderer is missing on the door object!");
         }
-    }
 
+         if (netPlayer == null)
+        {
+            netPlayer = FindObjectOfType<NetworkPlayer>();
+            if (netPlayer == null)
+            {
+                Debug.LogError("NetworkPlayer script not found in the scene!");
+            }
+        }
+    }
 
     private void OnTriggerEnter(Collider other)
     {
         Debug.Log("Controller entered the door trigger!");
 
-        // Check if the colliding object has the correct tag and this door is tagged "EnterMaze"
-        if (other.CompareTag("PlayerTag"))
-        {
-            Debug.Log("Entered the maze");
+        // Check if the collided object has the tag "EnterMaze"
+        // if (other.CompareTag("EnterMaze"))
+        // {
+            Debug.Log("Object with tag 'EnterMaze' collided.");
 
-            // Try to get the NetworkPlayer component from the colliding object
-            netPlayer = other.GetComponent<NetworkPlayer>();
-
+            // Call ShowMazeText on the NetworkPlayer script
             if (netPlayer != null)
             {
-                // Call the InitializeMazeText method on the NetworkPlayer
-                netPlayer.InitializeMazeText();
-
-                // Set initial text values (ensure these are properly set up in the NetworkPlayer script)
-                netPlayer.countText.text = "Count: 0";
-                netPlayer.timerText.text = "Time: 00:00";
-                netPlayer.environmentalFactsText.text = "TEST IF HERE";
+                netPlayer.ShowMazeText();
+                Debug.Log("ShowMazeText function called on NetworkPlayer.");
             }
             else
             {
-                Debug.LogError("The colliding object does not have a NetworkPlayer component!");
+                Debug.LogError("NetworkPlayer reference is null. Assign it in the inspector.");
             }
-        }
+        //}
 
-
-
+        // Toggle the door
         ToggleDoor();
     }
 
-    void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("EnterMaze"))
-        {
-            Debug.Log("testing this");
-        }
-    }
+
+    // private void OnTriggerEnter(Collider other)
+    // {
+    //     Debug.Log("Controller entered the door trigger!");
+
+    //     ToggleDoor();
+    // }
+
+    // void OnCollisionEnter(Collision collision)
+    // {
+    //     Debug.Log("Controller entered the door trigger!");
+    //     if (collision.gameObject.CompareTag("EnterMaze"))
+    //     {
+    //         Debug.Log("testing this");
+    //     }
+    //     ToggleDoor();
+    // }
 
 
     public void ToggleDoor()

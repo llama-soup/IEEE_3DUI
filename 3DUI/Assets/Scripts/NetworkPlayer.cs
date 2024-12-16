@@ -384,7 +384,18 @@ void UpdatePlayerPositionClientRpc(Vector3 position, Quaternion rotation)
         timerText = mazeTextPriv.transform.Find("Timer").GetComponent<TMP_Text>();
         environmentalFactsText = mazeTextPriv.transform.Find("EnvironmentalFacts").GetComponent<TMP_Text>();
         
+        countText.alpha = 0f;
+        timerText.alpha = 0f;
+        environmentalFactsText.alpha = 0f;
     }
+
+    public void ShowMazeText()
+    {
+        countText.alpha = 1f;
+        timerText.alpha = 1f;
+        environmentalFactsText.alpha = 1f;
+    }
+
 
     private void OnTriggerEnter(Collider other)
     {
