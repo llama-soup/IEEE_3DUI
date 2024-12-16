@@ -102,6 +102,7 @@ public class NetworkPlayer : NetworkBehaviour
     }
 
     private void IntializeMainText(){
+        Debug.Log("running intialize");
         mainText = GameObject.FindWithTag("Chat");
         mainChatScript = mainText.GetComponent<ChatBox>();
         mainChatScript.Updatelanguage(player_ID, language);
@@ -311,9 +312,7 @@ void UpdatePlayerPositionClientRpc(Vector3 position, Quaternion rotation)
             microphones = GameObject.FindWithTag("Microphone Dropdown");
             UpdateMicrophone();
         }
-        Debug.Log(GameObject.FindWithTag("Chat"));
         if((mainText == null || playerChat == null) && GameObject.FindWithTag("Chat") != null){
-            Debug.Log("trying to intialize text");
             IntializeMainText();
         }
         //Process for recording the messages
