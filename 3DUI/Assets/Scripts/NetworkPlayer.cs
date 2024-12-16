@@ -118,6 +118,7 @@ public class NetworkPlayer : NetworkBehaviour
     }
 
     private void IntializeMainText(){
+        Debug.Log("running intialize");
         mainText = GameObject.FindWithTag("Chat");
         mainChatScript = mainText.GetComponent<ChatBox>();
         mainChatScript.Updatelanguage(player_ID, language);
