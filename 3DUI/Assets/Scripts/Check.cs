@@ -67,20 +67,11 @@ public class Check : MonoBehaviour
             && is0(rFive) && is270(rSix) && (is0(rSeven) || is180(rSeven)) && is270(rEight)
             && is0(rNine) && is90(rTen) && is90(rEleven) && is90(rTwelve))
         {
-            Debug.Log("Completed puzzle");
-            // instructions.transform.Translate(0,0,0.1499986f * 0.05f);
-            // complete.transform.Translate(0,0,-0.1499986f * 0.05f);
             complete.SetActive(true);
             instructions.SetActive(false);
             // change = false;
             presentWirePortal.gameObject.SetActive(true);
             futureWirePortal.gameObject.SetActive(true);
-        }
-
-        //Debugging code:
-        if(is270(rZero) && is180(rOne))
-        {
-            Debug.Log("squareZero and rOne");
         }
     }
 
