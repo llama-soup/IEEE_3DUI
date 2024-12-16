@@ -36,14 +36,33 @@ public class ChatBox : NetworkBehaviour
         }
         string num = playerID.ToString();
         message = "player" +  num + ": " + message;
-        messages.Add(message);
-        UpdateText();
-    }
+        MessageServerRpc(message);
+        //messages.Add(message);
+        //UpdateText();
 
+    }
     public void Updatelanguage(int playerID, string language){
-        languages[playerID] = language;
+        //languages[playerID] = language;
+        LanguageServerRpc(language, playerID);
     }
     public string getText(){
         return textbox.text;
+    }
+    [ClientRpc]
+    private void LanguageClientRpc(string language, int id){
+        languages[id] = language;
+    }
+    [ServerRpc]
+    private void LanguageServerRpc(string language, int id){
+        LanguageClientRpc(language, id);
+    }
+    [ClientRpc]
+    private void MessageClientRpc(string newMessage){
+        messages.Add(newMessage);
+        UpdateText();
+    }
+    [ServerRpc]
+    private void MessageServerRpc(string message){
+        MessageClientRpc(message); 
     }
 }
