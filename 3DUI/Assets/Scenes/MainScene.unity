@@ -1644,6 +1644,10 @@ PrefabInstance:
       propertyPath: presentWirePortal
       value: 
       objectReference: {fileID: 1771799793}
+    - target: {fileID: 4582397198127822650, guid: 43d33d4e23f94554782dd9701f15c1f2, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.1499986
+      objectReference: {fileID: 0}
     - target: {fileID: 6095463695663483903, guid: 43d33d4e23f94554782dd9701f15c1f2, type: 3}
       propertyPath: m_Name
       value: Wires
@@ -25054,6 +25058,10 @@ PrefabInstance:
       propertyPath: presentWirePortal
       value: 
       objectReference: {fileID: 1771799793}
+    - target: {fileID: 4582397198127822650, guid: 43d33d4e23f94554782dd9701f15c1f2, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.1499986
+      objectReference: {fileID: 0}
     - target: {fileID: 6095463695663483903, guid: 43d33d4e23f94554782dd9701f15c1f2, type: 3}
       propertyPath: m_Name
       value: Wires (1)
@@ -38258,5 +38266,4 @@ SceneRoots:
   - {fileID: 498294730}
   - {fileID: 9855740}
   - {fileID: 1409450973}
-  - {fileID: 911581605}
   - {fileID: 175459711}
