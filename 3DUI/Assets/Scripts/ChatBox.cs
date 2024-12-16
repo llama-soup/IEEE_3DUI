@@ -17,6 +17,9 @@ public class ChatBox : NetworkBehaviour
         languages = new string[2];
         messages.Add("This is the Chatbox. Player messages will appear here.");
         UpdateText();
+        for(int i = 0; i < languages.Length; i++){
+            languages[i] = "french";
+        }
     }
 
     private void UpdateText(){
