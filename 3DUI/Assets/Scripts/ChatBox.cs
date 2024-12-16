@@ -38,7 +38,7 @@ public class ChatBox : NetworkBehaviour
         message = "player" +  num + ": " + message;
         MessageServerRpc(message);
         //messages.Add(message);
-        UpdateText();
+        //UpdateText();
 
     }
     public void Updatelanguage(int playerID, string language){
@@ -59,6 +59,7 @@ public class ChatBox : NetworkBehaviour
     [ClientRpc]
     private void MessageClientRpc(string newMessage){
         messages.Add(newMessage);
+        UpdateText();
     }
     [ServerRpc]
     private void MessageServerRpc(string message){
