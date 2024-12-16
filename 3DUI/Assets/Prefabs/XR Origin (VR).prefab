@@ -2869,6 +2869,18 @@ PrefabInstance:
       propertyPath: head.trackingRotationOffset.y
       value: 90
       objectReference: {fileID: 0}
+    - target: {fileID: 7137056629266808356, guid: 39b547fe254edda4fa3b5c140a316486, type: 3}
+      propertyPath: stepLength
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7137056629266808356, guid: 39b547fe254edda4fa3b5c140a316486, type: 3}
+      propertyPath: stepDistance
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7236352937953687550, guid: 39b547fe254edda4fa3b5c140a316486, type: 3}
+      propertyPath: stepDistance
+      value: 0.5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
