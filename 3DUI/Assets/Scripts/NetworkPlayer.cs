@@ -425,6 +425,7 @@ void UpdatePlayerPositionClientRpc(Vector3 position, Quaternion rotation)
 
     public void ShowMazeText()
     {
+        Debug.Log("SHOWING");
         countText.alpha = 1f;
         timerText.alpha = 1f;
         environmentalFactsText.alpha = 1f;
@@ -444,6 +445,7 @@ void UpdatePlayerPositionClientRpc(Vector3 position, Quaternion rotation)
 
     private void OnTriggerEnter(Collider other)
     {
+        //ShowMazeText();
         Debug.Log("On trigger enter actually works");
         if (other.CompareTag("EnterMaze"))
         {

@@ -109,7 +109,6 @@ public class PlayerController : MonoBehaviour
             envFacts.text = "You failed! Click to restart";
             restartButton.gameObject.SetActive(true);
             timerStopped = true;
-            //TODO: STOP PLAYER MOVEMENT
          }
          int minutes = Mathf.FloorToInt(remainingTime/60);
          int seconds = Mathf.FloorToInt(remainingTime%60);
