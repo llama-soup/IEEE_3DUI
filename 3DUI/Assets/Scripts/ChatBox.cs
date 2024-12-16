@@ -11,12 +11,14 @@ public class ChatBox : NetworkBehaviour
     [SerializeField] private TMP_Text textbox;
     private List<string> messages;
     public string[] languages;
-    private List<NetworkVariable<string>> netMessage = new List<NetworkVariable<string>>();
-    private NetworkVariable<string>[] netLanguage = new NetworkVariable<string>[2];
+    private List<NetworkVariable<string>> netMessage;
+    private NetworkVariable<string>[] netLanguage;
     void Start()
     {
         messages = new List<string>();
         languages = new string[2];
+        netMessage = new List<NetworkVariable<string>>();
+        netLanguage = new NetworkVariable<string>[2];
         messages.Add("This is the Chatbox. Player messages will appear here.");
         UpdateText();
         ChangeNetLanguage();
