@@ -24,29 +24,29 @@ public class DoorNew : MonoBehaviour
     {
         Debug.Log("Controller entered the door trigger!");
 
-        // // Check if the colliding object has the correct tag and this door is tagged "EnterMaze"
-        // if (other.CompareTag("PlayerTag"))
-        // {
-        //     Debug.Log("Entered the maze");
+        // Check if the colliding object has the correct tag and this door is tagged "EnterMaze"
+        if (other.CompareTag("PlayerTag"))
+        {
+            Debug.Log("Entered the maze");
 
-        //     // Try to get the NetworkPlayer component from the colliding object
-        //     netPlayer = other.GetComponent<NetworkPlayer>();
+            // Try to get the NetworkPlayer component from the colliding object
+            netPlayer = other.GetComponent<NetworkPlayer>();
 
-        //     if (netPlayer != null)
-        //     {
-        //         // Call the InitializeMazeText method on the NetworkPlayer
-        //         netPlayer.InitializeMazeText();
+            if (netPlayer != null)
+            {
+                // Call the InitializeMazeText method on the NetworkPlayer
+                netPlayer.InitializeMazeText();
 
-        //         // Set initial text values (ensure these are properly set up in the NetworkPlayer script)
-        //         netPlayer.countText.text = "Count: 0";
-        //         netPlayer.timerText.text = "Time: 00:00";
-        //         netPlayer.environmentalFactsText.text = "TEST IF HERE";
-        //     }
-        //     else
-        //     {
-        //         Debug.LogError("The colliding object does not have a NetworkPlayer component!");
-        //     }
-        // }
+                // Set initial text values (ensure these are properly set up in the NetworkPlayer script)
+                netPlayer.countText.text = "Count: 0";
+                netPlayer.timerText.text = "Time: 00:00";
+                netPlayer.environmentalFactsText.text = "TEST IF HERE";
+            }
+            else
+            {
+                Debug.LogError("The colliding object does not have a NetworkPlayer component!");
+            }
+        }
 
 
 
