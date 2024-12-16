@@ -23,6 +23,7 @@ public class ChatSpawner : MonoBehaviour
             {
                 // Spawn the object for all clients
                 networkObject.Spawn();
+                spawnedObject.SetActive(false);
             }
         }
     }
