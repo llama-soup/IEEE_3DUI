@@ -411,7 +411,7 @@ void UpdatePlayerPositionClientRpc(Vector3 position, Quaternion rotation)
     {
         // Instantiate the prefab
         mazeTextPriv = Instantiate(mazeTextPrefab, transform);
-        mazeTextPriv.transform.localPosition = new Vector3(-34.0f, 1.5f, 30.0f);
+        mazeTextPriv.transform.localPosition = new Vector3(-34.0f, 2f, 30.0f);
 
         // Get references to the UI components
         countText = mazeTextPriv.transform.Find("CountText").GetComponent<TMP_Text>();
