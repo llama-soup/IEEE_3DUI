@@ -61,6 +61,7 @@ public class ChatBox : NetworkBehaviour
     }
     private void ChangeNetLanguage(){
         for(int i = 0; i < languages.Length; i++){
+            Debug.Log(i);
             netLanguage[i].Value = languages[i];
         }
     }
@@ -70,6 +71,8 @@ public class ChatBox : NetworkBehaviour
             UpdateText();
         }
         else{
+            Debug.Log(netMessage[0].Value);
+            Debug.Log(messages[0]);
             if(netMessage[0].Value != messages[0]){
                 for(int i = 0; i < netMessage.Count; i++){
                     messages[i] = netMessage[i].Value;
