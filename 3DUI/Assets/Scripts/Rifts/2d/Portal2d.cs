@@ -1,3 +1,7 @@
+/// <summary>
+/// Controls all logic for time rifts.
+/// </summary>
+
 using UnityEngine;
 using UnityEngine.XR;
 using System.Collections;
@@ -15,12 +19,13 @@ public class Portal2d : MonoBehaviour
     private RenderTexture leftRenderTexture;
     private RenderTexture rightRenderTexture;
     
-    // Standard IPD (Interpupillary Distance)
+    // Standard IPD
     private readonly Vector3 leftEyeOffset = new Vector3(0.032f, 0, 0);
     private readonly Vector3 rightEyeOffset = new Vector3(-0.032f, 0, 0);
     private static float lastTeleportTime;
     private const float TELEPORT_COOLDOWN = 0.5f;
 
+    // Create a camera for each eye for the rift view
     void Start()
     {
 
@@ -35,6 +40,8 @@ public class Portal2d : MonoBehaviour
         leftEyeCamera = CreateEyeCamera("LeftEyeCamera", leftEyeOffset);
         rightEyeCamera = CreateEyeCamera("RightEyeCamera", rightEyeOffset);
 
+        // Hard coded value for rotation
+        // This code should be done in update and calculate the correct rotation each frame
         leftEyeCamera.transform.localRotation = Quaternion.Euler(0, -8f, 0);
         rightEyeCamera.transform.localRotation = Quaternion.Euler(0, 8f, 0);
         
@@ -50,6 +57,7 @@ public class Portal2d : MonoBehaviour
         otherPortal.portalMaterial.SetTexture("_RightEyeTex", rightRenderTexture);
     }
 
+    // Create a camera at the given offest with an FOV of 95
     private Camera CreateEyeCamera(string name, Vector3 offset)
     {
         GameObject eyeCam = new GameObject(name);
@@ -62,6 +70,7 @@ public class Portal2d : MonoBehaviour
         return cam;
     }
 
+    // Use oblique projection matrix to clip objects between camera and portal
     private void SetNearClipPlane(Camera portalEyeCamera, bool isLeftEye) 
     {
         Transform clipPlane = transform;
@@ -96,6 +105,7 @@ public class Portal2d : MonoBehaviour
         }
     }
 
+    // update the position and rotation of the portal cameras
     void LateUpdate()
     {
         // Calculate parent position and rotation
@@ -115,6 +125,7 @@ public class Portal2d : MonoBehaviour
         SetNearClipPlane(rightEyeCamera, false);
     }
 
+    // release textures to avoid memory leaks
     void OnDestroy()
     {
         if (leftRenderTexture != null)
@@ -123,6 +134,7 @@ public class Portal2d : MonoBehaviour
             rightRenderTexture.Release();
     }
 
+    // teleport keycard and interactable objects
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Keycard") | other.CompareTag("Interactable"))
@@ -177,6 +189,7 @@ public class Portal2d : MonoBehaviour
         }
     }
 
+    // When a portal is spawned, run spawn animation
     void OnEnable()
     {
         // Store original child scales and set initial inverse scale
@@ -190,6 +203,7 @@ public class Portal2d : MonoBehaviour
         StartCoroutine(ScalePortalAnimation());
     }
 
+    // Spawn animation sets scale to very small and increases to its normal scale over 2 seconds
     private IEnumerator ScalePortalAnimation()
     {
         float elapsedTime = 0;
