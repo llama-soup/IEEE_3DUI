@@ -26,6 +26,7 @@ public class DoorNew : MonoBehaviour
                 Debug.LogError("NetworkPlayer script not found in the scene!");
             }
         }
+        Debug.Log(netPlayer);
     }
 
     private void OnTriggerEnter(Collider other)
