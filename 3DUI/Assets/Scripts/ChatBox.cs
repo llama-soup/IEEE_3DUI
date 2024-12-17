@@ -31,18 +31,11 @@ public class ChatBox : NetworkBehaviour
     }
 
     public void AddMessage(int playerID, string message){
-        if(messages.Count >= 4){
-            messages.RemoveAt(0);
-        }
         string num = playerID.ToString();
         message = "player" +  num + ": " + message;
         MessageServerRpc(message);
-        //messages.Add(message);
-        //UpdateText();
-
     }
     public void Updatelanguage(int playerID, string language){
-        //languages[playerID] = language;
         LanguageServerRpc(language, playerID);
     }
     public string getText(){
@@ -58,6 +51,9 @@ public class ChatBox : NetworkBehaviour
     }
     [ClientRpc]
     private void MessageClientRpc(string newMessage){
+        if(messages.Count >= 4){
+            messages.RemoveAt(0);
+        }
         messages.Add(newMessage);
         UpdateText();
     }
