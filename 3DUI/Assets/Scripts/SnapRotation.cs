@@ -5,8 +5,8 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 public class SnapRotation : MonoBehaviour
 {
-
     private XRBaseInteractable interactable;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -14,6 +14,10 @@ public class SnapRotation : MonoBehaviour
         interactable.selectExited.AddListener(Snap);
     }
 
+    // Runs when player releases a wire they were grabbing and rotating. Checks
+    // the rotation of the wire and automatically sets it to one of four rotation
+    // positions - 0 degrees, 90 degrees, 180 degrees, or 270 degrees - depending on
+    // which of the four positions they are closest to.
     public void Snap(BaseInteractionEventArgs select)
     {
         float anglesZ = transform.rotation.eulerAngles.z;

@@ -11,7 +11,9 @@ public class FreezeRotate : MonoBehaviour
         parent = GameObject.Find("Wires");
     }
 
-    // Update is called once per frame
+    // Update is called once per frame. Fixes the wires' x and y rotations so that
+    // they will both always be 0 degrees, meaning when players grab the wires, they
+    // can only be rotated around the z-axis.
     void Update()
     {
         if(transform.eulerAngles.y != parent.transform.eulerAngles.y || transform.eulerAngles.x != parent.transform.eulerAngles.x)

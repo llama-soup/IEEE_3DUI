@@ -21,8 +21,6 @@ public class Check : MonoBehaviour
     GameObject complete;
     public GameObject presentWirePortal;
     public GameObject futureWirePortal;
-    // bool change = true;
-    // int index = 0;
     
     // Start is called before the first frame update
     void Start()
@@ -46,7 +44,10 @@ public class Check : MonoBehaviour
         complete.SetActive(false);
     }
 
-    // Update is called once per frame
+    // Update is called once per frame and checks the rotation of all thirteen wires to see if they have
+    // all been rotated the correct number of degrees. If so, the instructions for solving the puzzle
+    // will be replaced by a message informing the player they can now communicate with the other player
+    // via portal.
     void Update()
     {
         float rZero = squareZero.transform.eulerAngles.z;
@@ -69,13 +70,12 @@ public class Check : MonoBehaviour
         {
             complete.SetActive(true);
             instructions.SetActive(false);
-            // change = false;
             presentWirePortal.gameObject.SetActive(true);
             futureWirePortal.gameObject.SetActive(true);
         }
     }
 
-    // Helper functions for calculating angle
+    // Helper functions for checking if the wires have been rotated the correct number of degrees.
     bool is270(float angle)
     {
         if ((angle - 270) % 360 == 0)
