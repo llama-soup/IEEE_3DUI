@@ -31,21 +31,8 @@ public class Rotator : MonoBehaviour
         transform.Rotate (new Vector3 (15, 30, 45) * Time.deltaTime);
     }
 
-    if (other.CompareTag("PickUp"))
-        {
-            other.gameObject.SetActive(false);
-            newspaperCount = newspaperCount + 1;
-            SetCountText();
-            setEnvironmentalFact();
 
-            if (newspaperCount == 11)
-            {
-                timerStopped = true; // Stop the timer
-                //StartCoroutine(ShowCongratsMessageWithDelay());
-            }
-        }
-
-    private void OnTriggerEnter(Collider other)
+    public void OnTriggerEnter(Collider other)
     {
             Debug.Log("Controller entered the pickup trigger!");
             this.gameObject.SetActive(false);

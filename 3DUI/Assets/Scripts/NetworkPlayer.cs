@@ -61,8 +61,8 @@ public class NetworkPlayer : NetworkBehaviour
     public TMP_Text environmentalFactsText; // For EnvironmentalFacts
     public Button restartButton; // For Restart
 
-    private int newspaperCount;
-    private bool timerStopped = true;
+    public int newspaperCount;
+    public bool timerStopped = true;
     [SerializeField] float remainingTime = 120;
     public string[] EnvironmentalFacts = {
         "Recycling one ton of paper saves 17 trees.",
@@ -430,12 +430,12 @@ void UpdatePlayerPositionClientRpc(Vector3 position, Quaternion rotation)
         timerStopped = false; // Start the timer
     }
 
-     void SetCountText() 
+    public void SetCountText() 
     {
         countText.text =  "Newspaper Count: " + newspaperCount.ToString() + "/11";
     }
 
-    void setEnvironmentalFact()
+    public void setEnvironmentalFact()
     {
         environmentalFactsText.text = EnvironmentalFacts[newspaperCount-1];
     }
