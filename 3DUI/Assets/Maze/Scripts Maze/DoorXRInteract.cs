@@ -1,3 +1,5 @@
+//SCRIPT NOT USED: USED FOR TESTING PURPOSES ON 3D VR IMPLEMENTATION: IGNORE
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;

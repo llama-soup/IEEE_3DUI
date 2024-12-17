@@ -1,3 +1,5 @@
+//SCRIPT NOT UTILIZED IN THE FINAL IMPLEMENTATION: IGNORE
+
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -30,7 +32,7 @@ public class PlayerController : MonoBehaviour
 
 [SerializeField] TextMeshProUGUI countdownText;
 [SerializeField] float remainingTime;
-
+//placeholder facts
  public string[] EnvironmentalFacts = {
         "Recycling one ton of paper saves 17 trees.",
         "Plastic takes up to 1000 years to decompose.",

@@ -1,4 +1,4 @@
-
+//Class to handle operations with door objects in the maze
 
 using System.Collections;
 using System.Collections.Generic;
@@ -8,7 +8,7 @@ public class DoorNew : MonoBehaviour
 {
     private Renderer _renderer;
     private bool open = false;
-    public NetworkPlayer netPlayer;
+    public NetworkPlayer netPlayer; //reference to the network player (users)
 
     void Start()
     {
@@ -17,7 +17,7 @@ public class DoorNew : MonoBehaviour
         {
             Debug.LogError("Renderer is missing on the door object!");
         }
-
+        //Assign the network player at initialiaztion of the scene
          if (netPlayer == null)
         {
             netPlayer = FindObjectOfType<NetworkPlayer>();
@@ -34,8 +34,8 @@ public class DoorNew : MonoBehaviour
         Debug.Log("Controller entered the door trigger!");
 
         // Check if the collided object has the tag "EnterMaze"
-        // if (other.CompareTag("EnterMaze"))
-        // {
+        if (other.CompareTag("EnterMaze"))
+        {
             Debug.Log("Object with tag 'EnterMaze' collided.");
 
             // Call ShowMazeText on the NetworkPlayer script
@@ -48,31 +48,12 @@ public class DoorNew : MonoBehaviour
             {
                 Debug.LogError("NetworkPlayer reference is null. Assign it in the inspector.");
             }
-        //}
+        }
 
         // Toggle the door
         ToggleDoor();
     }
-
-
-    // private void OnTriggerEnter(Collider other)
-    // {
-    //     Debug.Log("Controller entered the door trigger!");
-
-    //     ToggleDoor();
-    // }
-
-    // void OnCollisionEnter(Collision collision)
-    // {
-    //     Debug.Log("Controller entered the door trigger!");
-    //     if (collision.gameObject.CompareTag("EnterMaze"))
-    //     {
-    //         Debug.Log("testing this");
-    //     }
-    //     ToggleDoor();
-    // }
-
-
+    //Function created to rotate the door from an open and closed position 
     public void ToggleDoor()
     {
         Debug.Log("ToggleDoor called!");

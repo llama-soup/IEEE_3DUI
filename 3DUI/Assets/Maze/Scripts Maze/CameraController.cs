@@ -1,3 +1,5 @@
+//SCRIPT NOT USED: USED FOR TESTING PURPOSES BEFORE VR IMPLEMENTATION
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
