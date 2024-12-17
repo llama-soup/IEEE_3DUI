@@ -1,16 +1,24 @@
+/*
+Script responsible for processing player inputs related to messaging the other player
+
+Author: Jackson McDonald
+*/
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class Translation : MonoBehaviour
 {
+    //The network player that sent the input
     private NetworkPlayer player;
-    // Start is called before the first frame update
-    //Finds the player
+
+    //Finds the player who will send the input
     private void Awake()
     {
         player = GetComponent<NetworkPlayer>();
     }
     //When the player presses the second button on the right controller it will trigger the function
+    //Parameters:
+    //  context is the state of the action that is used to trigger events in the function
     public void Translate(InputAction.CallbackContext context)
     {
         //Starts recording when button is pressed

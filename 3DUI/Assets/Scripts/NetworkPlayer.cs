@@ -1,3 +1,9 @@
+/*
+The prefab for each player that is spawned by the network.
+Contains the instructions for the players skyboxes, controls, communication, and UI
+
+Authors: Tom Roff, Jackson McDonald, and Emre Guvenilir
+*/
 using UnityEngine;
 using Unity.Netcode;
 using UnityEngine.Experimental.Rendering.RenderGraphModule;
@@ -28,30 +34,50 @@ public class NetworkPlayer : NetworkBehaviour
     public GameObject futurePlayerSpawnPoint;
 
     public GameObject presentPlayerSpawnPoint;
-
-    public Renderer[] meshToDisable;
-    //Traslate variables
-    private GameObject languageSetting;
-    private GameObject microphones;
-    private string language;
-    private string otherLanuage;
-    private string microphone;
-    public int player_ID;
-    private string messageTemp;
-    private List<ChatMessage> messages = new List<ChatMessage>();
-    private string prompt = "Act as a translator for the user. Your response should only include the translation requested. Don't break character. Don't ever mention that you are an AI model.";
-    private readonly string fileName = "output.wav";
-    private readonly int duration = 10;
-    private AudioClip clip;
-    private bool isRecording;
     public XROrigin xrOrigin;
+    public Renderer[] meshToDisable;
+    //Start of traslation variables
+    //Language menu
+    private GameObject languageSetting;
+    //Microphone menu
+    private GameObject microphones;
+    //The players chosen language setting
+    private string language;
+    //The language setting for the other player
+    private string otherLanuage;
+    //The microphone selected for recording
+    private string microphone;
+    //The players ID based on the number of people in the lobby when the player spawned
+    public int player_ID;
+    //Temperary variable to store the string from voice recording before translation
+    private string messageTemp;
+    //List of the messages to send to the Open AI for translation
+    private List<ChatMessage> messages = new List<ChatMessage>();
+    //Prompt for the AI translator
+    private string prompt = "Act as a translator for the user. Your response should only include the translation requested. Don't break character. Don't ever mention that you are an AI model.";
+    //Output file name for the player's recorded message
+    private readonly string fileName = "output.wav";
+    //maximum recording duration in seconds
+    private readonly int duration = 10;
+    //The audio clip of the recorded message
+    private AudioClip clip;
+    //Boolean to see if there is a recording currently in progress
+    private bool isRecording;
+    //Boolean used to end recording and send the message to translation
     private bool stop;
+    //How long the recording has been happening for
     private float time;
+    //The Open AI environment being used
     private OpenAIApi openai = new OpenAIApi();
+    //The main chat box that contains the player messages and language settings
     private GameObject mainText;
+    //The script for the main chat box
     private ChatBox mainChatScript;
+    //The prefab for the canvas that displays all messages to the user
     public GameObject canvasPrefab;
+    //The canvas prefab that is spawned by the network player
     private GameObject playerCanvas;
+    //The text box on the player canvas used to display messages
     private TMP_Text playerChat;
     //end of translate variables
     public GameObject mazeTextPrefab; // Prefab containing the text elements
@@ -96,10 +122,11 @@ public class NetworkPlayer : NetworkBehaviour
             {
                 if (item != null) item.enabled = false;
             }
-
+            //Establishes the player's ID
             player_ID = NetworkManager.Singleton.ConnectedClients.Count;
+            //Sets default language to english
             language = "english";
-            //Boolean that stops the audio recording.
+            //Establishes boolean that stops the audio recording.
             stop = false;
         }
 
@@ -116,9 +143,8 @@ public class NetworkPlayer : NetworkBehaviour
         InitializeMazeText();
 
     }
-
+    //Initializes the canvas prefab that is used to display all of the text to the player
     private void IntializeMainText(){
-        Debug.Log("running intialize");
         mainText = GameObject.FindWithTag("Chat");
         mainChatScript = mainText.GetComponent<ChatBox>();
         mainChatScript.Updatelanguage(player_ID, language);
@@ -127,8 +153,6 @@ public class NetworkPlayer : NetworkBehaviour
         playerCanvas.transform.localPosition = new Vector3(0, 1.5f, 2.0f); // Adjust position relative to the player
         playerChat = playerCanvas.GetComponentInChildren<TMP_Text>();
     }
-
-    //Creates the message dissplay for the player
     
     //Updates the language to what the player selects in the menu
     void UpdateLanguage(){
@@ -136,6 +160,7 @@ public class NetworkPlayer : NetworkBehaviour
         {
             int pickedIndex = component.value;
             language = component.options[pickedIndex].text;
+            //Updates the language setting in the array stored by the main chat box
             mainChatScript.Updatelanguage(player_ID, language);
         }
         else
@@ -165,8 +190,8 @@ public class NetworkPlayer : NetworkBehaviour
             isRecording = true;
             Debug.Log(microphone);
             #if !UNITY_WEBGL
+            //records the audio clip
             clip = Microphone.Start(microphone, false, duration, 44100);
-            SendReply();
             #endif
         }
     }
@@ -181,6 +206,7 @@ public class NetworkPlayer : NetworkBehaviour
     //Translates the message and sends it to the display
     private async void SendReply()
     {
+        //Creates the chat messages needed for translation
         var newMessage = new ChatMessage()
         {
             Role = "user",
@@ -220,7 +246,7 @@ public class NetworkPlayer : NetworkBehaviour
             message.Content = message.Content.Trim();
             
             messageTemp = message.Content;
-            Debug.Log(mainChatScript);
+            //Sends the newly translated message to the main chat box to be seen by all players
             mainChatScript.AddMessage(player_ID, messageTemp);
             messages.Clear();
         }
@@ -233,6 +259,7 @@ public class NetworkPlayer : NetworkBehaviour
     private async void EndRecording()
     {
         #if !UNITY_WEBGL
+        //Ends the recording
         Microphone.End(null);
         #endif
         
@@ -246,7 +273,7 @@ public class NetworkPlayer : NetworkBehaviour
             Model = "whisper-1",
         };
         var res = await openai.CreateAudioTranslation(req);
-
+        //Stores the text version of the recording in the temperary variable for the translator.
         messageTemp = res.Text;
         SendReply();
     }
@@ -301,13 +328,14 @@ void UpdatePlayerPositionClientRpc(Vector3 position, Quaternion rotation)
         transform.rotation = rotation;
     }
 }
-
+    //Updates the network player every frame
     void Update()
     {
         if (IsOwner)
         {
             UpdateLocalTransforms();
             SyncPositionsServerRpc();
+            //Sets the text on the players display canvas equal to that on the global chat box
             if(mainChatScript != null && playerChat != null){
                 playerChat.text = mainChatScript.getText();
             }
@@ -328,14 +356,16 @@ void UpdatePlayerPositionClientRpc(Vector3 position, Quaternion rotation)
             microphones = GameObject.FindWithTag("Microphone Dropdown");
             UpdateMicrophone();
         }
+        //Checks the main chat box has been spawned yet only if the chat box hasn't been initialized
         if((mainText == null || playerChat == null) && GameObject.FindWithTag("Chat") != null){
             IntializeMainText();
         }
         //Process for recording the messages
         if (isRecording)
         {
+            //Keeps track of how long the recording has been
             time += Time.deltaTime;
-            
+            //Stops the recording if button released or max duration has been hit
             if (time >= duration || stop)
             {
                 time = 0;
