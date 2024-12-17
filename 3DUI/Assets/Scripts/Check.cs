@@ -2,8 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/* This script checks over all thirteen wires in the wire puzzle to see if they have been rotated into their
+ * correct positions - thus solving the puzzle. If so, it will inform the players they can communicate each
+ * other and open up a portal for them to do so.
+ *
+ * Author: Alexander Li
+ */
 public class Check : MonoBehaviour
 {
+    // Wires in the circuit that can be rotated
     GameObject squareZero;
     GameObject squareOne;
     GameObject squareTwo;
@@ -17,8 +24,14 @@ public class Check : MonoBehaviour
     GameObject squareTen;
     GameObject squareEleven;
     GameObject squareTwelve;
+
+    // Instructions for what the players should do to solve the puzzle
     GameObject instructions;
+
+    // Message telling the player when they've completed the puzzle
     GameObject complete;
+
+    // The two portals that open upon the circuit's completion
     public GameObject presentWirePortal;
     public GameObject futureWirePortal;
     
@@ -50,6 +63,7 @@ public class Check : MonoBehaviour
     // via portal.
     void Update()
     {
+        // The rotation of the wires
         float rZero = squareZero.transform.eulerAngles.z;
         float rOne = squareOne.transform.eulerAngles.z;
         float rTwo = squareTwo.transform.eulerAngles.z;
@@ -76,6 +90,7 @@ public class Check : MonoBehaviour
     }
 
     // Helper functions for checking if the wires have been rotated the correct number of degrees.
+    // Checks if the given rotation is 270 degrees, or is 270 degrees plus any number of 360 degree rotations in either direction.
     bool is270(float angle)
     {
         if ((angle - 270) % 360 == 0)
@@ -85,6 +100,7 @@ public class Check : MonoBehaviour
         return false;
     }
 
+    // Checks if the given rotation is 0 degrees, or is 0 degrees plus any number of 360 degree rotations in either direction.
     bool is0(float angle)
     {
         if ((angle > 0 && angle < 0.01) || (angle % 360 == 0))
@@ -94,6 +110,7 @@ public class Check : MonoBehaviour
         return false;
     }
 
+    // Checks if the given rotation is 180 degrees, or is 180 degrees plus any number of 360 degree rotations in either direction.
     bool is180(float angle)
     {
         if ((angle - 180) % 360 == 0)
@@ -103,6 +120,7 @@ public class Check : MonoBehaviour
         return false;
     }
 
+    // Checks if the given rotation is 90 degrees, or is 90 degrees plus any number of 360 degree rotations in either direction.
     bool is90(float angle)
     {
         if ((angle - 90) % 360 == 0)
@@ -111,5 +129,4 @@ public class Check : MonoBehaviour
         }
         return false;
     }
-
 }

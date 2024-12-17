@@ -3,6 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 
+/* This script runs when the object it's attached to is deselected. It then checks the
+ * object's rotation and automatically sets it to either 0, 90, 180, or 270 degrees,
+ * depending on whichever rotation the object is currently closest to.
+ *
+ * Author: Alexander Li
+ */
 public class SnapRotation : MonoBehaviour
 {
     private XRBaseInteractable interactable;

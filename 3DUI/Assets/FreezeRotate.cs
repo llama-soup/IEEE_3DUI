@@ -2,6 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/* Holds the x and y rotations of the object this script is attached to constant
+ * to the x and y rotations of the Wire Puzzle.
+ *
+ * Author: Alexander Li
+ */
 public class FreezeRotate : MonoBehaviour
 {
     GameObject parent;
@@ -11,8 +16,8 @@ public class FreezeRotate : MonoBehaviour
         parent = GameObject.Find("Wires");
     }
 
-    // Update is called once per frame. Fixes the wires' x and y rotations so that
-    // they will both always be 0 degrees, meaning when players grab the wires, they
+    // Update is called once per frame. Fixes the rotatable wires' x and y rotations so that
+    // they will both always be constant to that of their parent - the wire puzzle itself, meaning when players grab the wires, they
     // can only be rotated around the z-axis.
     void Update()
     {
