@@ -1,3 +1,7 @@
+/// <summary>
+/// Manages multiplayer services for game
+/// </summary>
+
 using UnityEngine;
 using Unity.Netcode;
 using Unity.Services.Core;

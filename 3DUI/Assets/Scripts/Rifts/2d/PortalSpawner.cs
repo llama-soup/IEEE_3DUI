@@ -1,3 +1,7 @@
+/// <summary>
+/// Manages spawning and despawning portals
+/// </summary>
+
 using UnityEngine;
 
 public class PortalSpawner : MonoBehaviour
@@ -9,13 +13,12 @@ public class PortalSpawner : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        // If wires are active, deactivate them
+        // If player enters room and wire portals are active, deactivate them and activate catcard portals
         if (presentWire.activeSelf)
         {
             presentWire.SetActive(false);
             futureWire.SetActive(false);
             
-            // Activate catcards
             presentCatcard.SetActive(true);
             futureCatcard.SetActive(true);
         }

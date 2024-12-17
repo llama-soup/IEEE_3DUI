@@ -1,3 +1,7 @@
+/// <summary>
+/// Manages the settings menu on the player's wrist
+/// </summary>
+
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.XR.Interaction.Toolkit;
@@ -48,6 +52,7 @@ public class GameMenuManager : MonoBehaviour
         }
     }
 
+    // oggle when player presses menu button
     void Update()
     {
         UpdateMenuTransform();
@@ -57,6 +62,7 @@ public class GameMenuManager : MonoBehaviour
         }
     }
 
+    // Set scale and position to be located on player's left wrist
     private void UpdateMenuTransform()
     {
         if (menuInstance != null)
@@ -67,6 +73,7 @@ public class GameMenuManager : MonoBehaviour
         }
     }
 
+    // Set menu to be visible or not visible
     private void ToggleMenu()
     {
         if (menuInstance == null || menuNavigator == null) return;
@@ -82,6 +89,7 @@ public class GameMenuManager : MonoBehaviour
         SetRayInteractorsActive(isMenuActive);
     }
 
+    // Activates ray interactors for both hands
     private void SetRayInteractorsActive(bool active)
     {
         if (leftHandRay != null) leftHandRay.gameObject.SetActive(active);

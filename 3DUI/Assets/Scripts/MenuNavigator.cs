@@ -1,3 +1,7 @@
+/// <summary>
+/// Manages navigation to each screen in the settings menu
+/// </summary>
+
 using UnityEngine;
 
 public class MenuNavigator : MonoBehaviour

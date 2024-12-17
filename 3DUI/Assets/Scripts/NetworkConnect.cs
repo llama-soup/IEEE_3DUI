@@ -1,3 +1,7 @@
+/// <summary>
+/// Provides functions for hosting and joining network games
+/// </summary>
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;

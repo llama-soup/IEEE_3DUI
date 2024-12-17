@@ -1,3 +1,7 @@
+/// <summary>
+/// Manages turn controls of the player
+/// </summary>
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;

@@ -1,3 +1,7 @@
+/// <summary>
+/// Manages host and join UI screens in lobby scene
+/// </summary>
+
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
@@ -41,7 +45,6 @@ public class LobbyUI : MonoBehaviour
         else
         {
             Debug.LogWarning("Join code is empty. Please enter a valid join code.");
-            // Optionally, you can display an error message to the user here
         }
     }
 

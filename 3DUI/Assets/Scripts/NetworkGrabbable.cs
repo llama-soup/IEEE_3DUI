@@ -1,3 +1,8 @@
+/// <summary>
+/// Provides functionality for grabbable objects to work in multiplayer
+/// When a player grabs an object, they gain ownership over the object, then the ownership returns to the server after the object is dropped
+/// </summary>
+
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
@@ -19,6 +24,7 @@ public class NetworkedGrabbable : NetworkBehaviour
         }
     }
 
+    // Request ownership over object when grabbed
     private void OnGrabbed(SelectEnterEventArgs args)
     {
         if (!IsOwner)
@@ -27,6 +33,7 @@ public class NetworkedGrabbable : NetworkBehaviour
         }
     }
 
+    // give ownership of object to client
     [ServerRpc(RequireOwnership = false)]
     private void RequestOwnershipServerRpc(ulong clientId)
     {
