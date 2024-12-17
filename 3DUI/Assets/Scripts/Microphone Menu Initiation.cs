@@ -1,3 +1,8 @@
+/*
+Sets up the microphone dropdown menu in the player settings.
+
+Author: Jackson McDonald
+*/
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,6 +13,7 @@ using TMPro;
 
 public class MicrophoneMenuInitiation : MonoBehaviour
 {
+    //The microphone dropdown menu
     [SerializeField] private TMP_Dropdown dropdown;
     // Initalizes the microphone menu
     void Start()
