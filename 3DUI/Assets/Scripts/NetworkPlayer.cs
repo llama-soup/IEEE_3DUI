@@ -136,6 +136,7 @@ public class NetworkPlayer : NetworkBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        // Called when any scene is loaded, used for multiplayer functionality when Start() doesn't always function correctly.
         if(!IsServer){
             UpdateClientEnvironment();
             SetClientPos();
@@ -280,7 +281,7 @@ public class NetworkPlayer : NetworkBehaviour
 
 
     void UpdateClientEnvironment(){
-        // Set HDR to not cloudy day if we are the client (aka not the server, player 1)(aka player 2)
+        // Set HDR to cloudy day, update fog color and density if we are the client
         Debug.Log("Client environment updated!");
         RenderSettings.fogColor = futureFogcolor;
         RenderSettings.fogDensity = futureFogDensity;
@@ -290,6 +291,7 @@ public class NetworkPlayer : NetworkBehaviour
 
 
     void SetClientPos(){
+        //Update the client's position to the spawn point found in the level. Used for spawning the players in different locations in the level.
         futurePlayerSpawnPoint = GameObject.Find("Future Player Spawn Point");
         presentPlayerSpawnPoint = GameObject.Find("Present Player Spawn Point");
 
